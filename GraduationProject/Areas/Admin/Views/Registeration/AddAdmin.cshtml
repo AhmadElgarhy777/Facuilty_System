@@ -1,0 +1,56 @@
+﻿@model Models.ViewModels.AdminVM
+@section Scripts {
+
+    <partial name="_TempDataPartial.cshtml">
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Register</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddAdmin">
+                     
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" asp-for="Name" placeholder="Enter your name" >
+                                <span asp-validation-for="Name" class="text-warning"></span>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email</label>
+                            <input type="text" class="form-control" asp-for="Email" placeholder="Email@gmail.com" >
+                                <span asp-validation-for="Email" class="text-warning"></span>
+
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" asp-for="Password" placeholder="Enter your password" required>
+                                <span asp-validation-for="Password" class="text-warning"></span>
+
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            <label for="PasswordConfirmed" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" asp-for="PasswordConfirmed" placeholder="Confirm your password" required>
+                                <span asp-validation-for="PasswordConfirmed" class="text-warning"></span>
+
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
