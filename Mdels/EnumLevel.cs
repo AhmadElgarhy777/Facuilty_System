@@ -8,10 +8,10 @@ namespace Models
 {
     public enum EnumLevel
     {
-        First_Level,
-        Secound_Level,
-        Third_Level,
-        Fourth_Level,
+        First_Level=1,
+        Secound_Level=2,
+        Third_Level=3,
+        Fourth_Level=4,
 
     }
 }

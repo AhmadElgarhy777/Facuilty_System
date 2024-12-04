@@ -25,6 +25,11 @@ namespace Models
         public List<Lectures> Lectures { get; set; }
         public List<Sections> Sections { get; set; }
         public List<StudentCourse> StudentCourses { get; set; }
+        public Member Member { get; set; }
+        public Department Department { get; set; }
+        public string MemberId { get; set; } = null!;
+        public string DepartmentId { get; set; } = null!;
+
 
 
     }

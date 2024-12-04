@@ -40,10 +40,10 @@ namespace GraduationProject__FacuiltySystem__
                 (options => {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequiredLength = 8;
-                    options.Password.RequireDigit = true; 
-                    options.Password.RequireNonAlphanumeric = true; 
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 

@@ -10,22 +10,28 @@ namespace Models
 {
     public class Member
     {
-        public int MemberId { get; set; }
+        public string MemberId { get; set; } = null!;
         [Required]
         [DataType(DataType.Text)]
+        [MaxLength(20)]
 
         public string FName { get; set; } = null!;
         [Required]
+        [MaxLength(14)]
+        public string SSN { get; set; } = null!;
+        [Required]
         [DataType(DataType.Text)]
+        [MaxLength(40)]
 
         public string MName { get; set; } = null!;
         [Required]
         [DataType(DataType.Text)]
+        [MaxLength(20)]
 
         public string LName { get; set; } = null!;
-        [NotMapped]
-        public string FullName { get; set; } = null!;
+      
         [Required]
+        [Column(TypeName = "nvarchar(max)")]
 
         public EnumGender Gender { get; set; }
         [Required]
@@ -48,5 +54,7 @@ namespace Models
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
         public List<MemberPhone> memberPhones { get; set; }
+        public List<Course> Courses { get; set; }
+
     }
 }

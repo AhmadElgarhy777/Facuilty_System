@@ -1,0 +1,118 @@
+﻿@model Models.ViewModels.StudentVM
+@section Scripts {
+
+    <partial name="_TempDataPartial.cshtml">
+        <partial name="_ValidationScriptsPartial.cshtml">
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Add New Student</h2>
+    <form asp-action="AddStudent">
+        <!-- SSN -->
+        <div class="mb-3">
+            <label  class="form-label">SSN</label>
+            <input type="text" class="form-control" asp-for="SSN">
+            <span asp-validation-for="SSN" class="text-warning"></span>
+
+        </div>
+
+        <!-- First Name -->
+        <div class=" row mb-3 ">
+            <div class="col-4">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" asp-for="FName">
+            <span asp-validation-for="FName" class="text-warning"></span>
+            </div>
+            <div class ="col-4">
+            <label class="form-label">Middle Name</label>
+            <input type="text" class="form-control" asp-for="MName">
+            <span asp-validation-for="MName" class="text-warning"></span>
+            </div>
+            <div class="col-4">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" asp-for="LName">
+            <span asp-validation-for="LName" class="text-warning"></span>
+            </div>
+        </div>
+
+      
+
+        <!-- Gender -->
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" asp-for="Gender">
+                <option value="">Select Gender</option>
+                @foreach (var gender in ViewBag.EnumGender)
+                {
+
+                <option value="@gender">@gender</option>
+
+                }
+                
+            </select>
+            <span asp-validation-for="Gender" class="text-warning"></span>
+
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" asp-for="Address">
+            <span asp-validation-for="Address" class="text-warning"></span>
+
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" asp-for="Email">
+            <span asp-validation-for="Email" class="text-warning"></span>
+
+        </div>
+
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Department</label>
+                    <select class="form-select" asp-for="DepartmentId" asp-items=" ViewBag.department">
+                        <option value="">Select Department</option>
+                    </select>
+                    <span asp-validation-for="DepartmentId" class="text-warning"></span>
+
+                </div>
+
+        <!-- Level -->
+        <div class="mb-3">
+            <label for="level" class="form-label">Level</label>
+                    <select class="form-select" asp-for="Level" >
+                <option value="">Select Level</option>
+                @foreach (var level in ViewBag.EnumLevel)
+                {
+ 
+                    <option value="@level">@level</option>
+
+                 }
+            </select>
+            <span asp-validation-for="Level" class="text-warning"></span>
+
+        </div>
+
+        <!-- Nationality -->
+        <div class="mb-3">
+            <label for="nationality" class="form-label">Nationality</label>
+            <input type="text" class="form-control" asp-for="Nationailty">
+            <span asp-validation-for="Nationailty" class="text-warning"></span>
+
+        </div>
+
+        <!-- Birth Date -->
+        <div class="mb-3">
+            <label for="birthDate" class="form-label">Birth Date</label>
+            <input type="date" class="form-control" asp-for="BirthDate">
+            <span asp-validation-for="BirthDate" class="text-warning"></span>
+
+        </div>
+
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>

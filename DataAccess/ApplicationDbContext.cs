@@ -28,10 +28,7 @@ namespace DataAccess
             builder.Entity<Course>().HasKey(k => new { k.CourseId, k.CourseLevel });
             builder.Entity<StudentCourse>().HasKey(k => new { k.CourseId, k.CourseLevel, k.StudentId, k.Level });
 
-            builder.Entity<Student>().Property(p => p.FullName).HasComputedColumnSql("[FName] + ' ' + [MName] + ' ' + [LName]");
-            builder.Entity<Member>().Property(p => p.FullName).HasComputedColumnSql("[FName] + ' ' + [MName] + ' ' + [LName]");
-            builder.Entity<Employee>().Property(p => p.FullName).HasComputedColumnSql("[FName] + ' ' + [MName] + ' ' + [LName]");
-
+         
             builder.Entity<IdentityRole>().ToTable("IdentityRole", "Securty");
             builder.Entity<IdentityUser>().ToTable("IdentityUser", "Securty");
             builder.Entity<IdentityUserRole<string>>().ToTable("IdentityUserRole", "Securty");
@@ -39,9 +36,12 @@ namespace DataAccess
             builder.Entity<IdentityUserLogin<string>>().ToTable("IdentityUserLogin", "Securty");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("IdentityRoleClaim", "Securty");
             builder.Entity<IdentityUserToken<string>>().ToTable("IdentityUserToken", "Securty");
-        
 
-    }
+            //builder.Entity<Student>().ToTable("Students", "Models");
+           
+
+           
+        }
 
     }
 }

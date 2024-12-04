@@ -19,6 +19,8 @@ namespace Models
         public string NumOfCourses { get; set; }
         public ICollection<Student> Students { get; } = new List<Student>();
         public ICollection<Member> members { get; } = new List<Member>();
+        public ICollection<Course> Courses { get; } = new List<Course>();
+
         public ICollection<Employee> Employees { get; } = new List<Employee>();
 
 

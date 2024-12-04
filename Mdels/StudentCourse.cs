@@ -17,6 +17,8 @@ namespace Models
         public Student Student { get; set; }
         public Course Course { get; set; }
 
+        public int degree { get; set; }
+
 
     }
 }
