@@ -47,8 +47,7 @@ namespace Models
         [Required]
 
         public DateTime BirthDate { get; set; }
-        [NotMapped]
-        public int Age { get; set; }
+    
         
         public List<StudentCourse> StudentCourses { get; set; }
 

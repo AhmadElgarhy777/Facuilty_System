@@ -27,8 +27,8 @@ namespace Models
         public List<StudentCourse> StudentCourses { get; set; }
         public Member Member { get; set; }
         public Department Department { get; set; }
-        public string MemberId { get; set; } = null!;
-        public string DepartmentId { get; set; } = null!;
+        public string MemberId { get; set; } 
+        public string DepartmentId { get; set; } 
 
 
 

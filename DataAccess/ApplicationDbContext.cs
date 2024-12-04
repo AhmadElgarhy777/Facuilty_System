@@ -38,9 +38,13 @@ namespace DataAccess
             builder.Entity<IdentityUserToken<string>>().ToTable("IdentityUserToken", "Securty");
 
             //builder.Entity<Student>().ToTable("Students", "Models");
-           
 
-           
+            builder.Entity<Course>()
+.HasOne(c => c.Member)
+.WithMany(m => m.Courses)
+.HasForeignKey(c => c.MemberId)
+.OnDelete(DeleteBehavior.Restrict);
+
         }
 
     }

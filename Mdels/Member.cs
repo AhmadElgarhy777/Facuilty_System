@@ -48,8 +48,7 @@ namespace Models
         [Required]
 
         public DateTime BirthDate { get; set; }
-        [NotMapped]
-        public int Age { get; set; }
+       
         public int Experence { get; set; }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
