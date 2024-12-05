@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Tracing;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Models.ViewModels
 {
@@ -26,8 +27,9 @@ namespace Models.ViewModels
         [DataType(DataType.Text)]
         [MaxLength(20)]
         public string LName { get; set; } = null!;
-        
 
+        [ValidateNever]
+        public string ImgUrl { get; set; }
         [Required]
         public EnumGender Gender { get; set; }
         [Required]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,7 +30,9 @@ namespace Models
         [MaxLength(20)]
 
         public string LName { get; set; } = null!;
-      
+        [ValidateNever]
+        public string ImgUrl { get; set; }
+
         [Required]
         [Column(TypeName = "nvarchar(max)")]
 

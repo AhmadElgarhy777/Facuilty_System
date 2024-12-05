@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Models
 {
@@ -29,7 +30,9 @@ namespace Models
         [MaxLength(20)]
 
         public string LName { get; set; } = null!;
-      
+        [ValidateNever]
+        public string ImgUrl { get; set; }
+
         [Required]
         [Column(TypeName = "nvarchar(max)")]
 
@@ -51,7 +54,6 @@ namespace Models
       
         public string PhoneNumer { get; set; } = null!;
 
-        public int DepartmentId { get; set; }
-        public Department Department { get; set; }
+       
     }
 }

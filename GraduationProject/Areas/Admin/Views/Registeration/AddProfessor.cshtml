@@ -1,4 +1,4 @@
-﻿@model Models.ViewModels.StudentVM
+﻿@model Models.ViewModels.MemberVM
 @section Scripts {
 
     <partial name="_TempDataPartial.cshtml">
@@ -6,11 +6,9 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Add New Student</h2>
-            <form asp-action="AddStudent" enctype="multipart/form-data">
-             
-                
-                <!-- SSN -->
+            <h2 class="text-center mb-4">Add New Professor</h2>
+            <form asp-action="AddProfessor" enctype="multipart/form-data">
+        <!-- SSN -->
         <div class="mb-3">
             <label  class="form-label">SSN</label>
             <input type="text" class="form-control" asp-for="SSN">
@@ -37,12 +35,11 @@
             </div>
         </div>
 
-
                 <div class=" mb-3">
             @*   <div class="profile-img">
                     <img src="~/Img/@Model.ImgUrl" alt="Profile Picture" class="rounded-circle border" width="150" height="150">
                     </div> *@
-                    <div >
+                    <div>
                         <label class="form-label">
                             Upload Image
                         </label>
@@ -51,6 +48,9 @@
 
                     </div>
                 </div>
+
+      
+
         <!-- Gender -->
         <div class="mb-3">
             <label for="gender" class="form-label">Gender</label>
@@ -93,27 +93,21 @@
 
                 </div>
 
-        <!-- Level -->
-        <div class="mb-3">
-            <label for="level" class="form-label">Level</label>
-                    <select class="form-select" asp-for="Level" >
-                <option value="">Select Level</option>
-                @foreach (var level in ViewBag.EnumLevel)
-                {
- 
-                    <option value="@level">@level</option>
-
-                 }
-            </select>
-            <span asp-validation-for="Level" class="text-warning"></span>
-
-        </div>
-
+      
         <!-- Nationality -->
-        <div class="mb-3">
-            <label for="nationality" class="form-label">Nationality</label>
+        <div class="row mb-3">
+            <div class="col-6">
+            <label class="form-label">Nationality</label>
             <input type="text" class="form-control" asp-for="Nationailty">
             <span asp-validation-for="Nationailty" class="text-warning"></span>
+              </div>
+                    <div class="col-6">        
+                    <label class="form-label">Experence</label>
+                    <input type="number" class="form-control" asp-for="Experence">
+                    <span asp-validation-for="Experence" class="text-warning"></span>
+                    </div>
+
+
 
         </div>
 
@@ -128,6 +122,5 @@
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Add</button>
-               
     </form>
 </div>

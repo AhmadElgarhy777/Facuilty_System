@@ -20,7 +20,6 @@ namespace Models
         public ICollection<Student> Students { get; } = new List<Student>();
         public ICollection<Member> members { get; } = new List<Member>();
         public List<Course> Courses { get; set; }
-        public ICollection<Employee> Employees { get; } = new List<Employee>();
 
 
     }
