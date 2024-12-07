@@ -4,6 +4,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207161236_edit_phone_col")]
+    partial class edit_phone_col
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,7 +274,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Models.Department", b =>
@@ -300,7 +303,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("DepartmentId");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Models.Employee", b =>
@@ -357,7 +360,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Models.Lectures", b =>
@@ -392,7 +395,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CourseId1", "CourseLevel1");
 
-                    b.ToTable("Lectures", (string)null);
+                    b.ToTable("Lectures");
                 });
 
             modelBuilder.Entity("Models.Member", b =>
@@ -456,7 +459,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Members", (string)null);
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("Models.MemberPhone", b =>
@@ -479,7 +482,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("MemberPhones", (string)null);
+                    b.ToTable("MemberPhones");
                 });
 
             modelBuilder.Entity("Models.Sections", b =>
@@ -514,7 +517,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CourseId1", "CourseLevel1");
 
-                    b.ToTable("Sections", (string)null);
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Models.Student", b =>
@@ -575,7 +578,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Models.StudentCourse", b =>
@@ -613,7 +616,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("StudentId1", "StudentLevel");
 
-                    b.ToTable("StudentCourses", (string)null);
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("Models.StudentPhone", b =>
@@ -643,7 +646,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("StudentId1", "StudentLevel");
 
-                    b.ToTable("StudentPhones", (string)null);
+                    b.ToTable("StudentPhones");
                 });
 
             modelBuilder.Entity("Models.ApplicationUser", b =>

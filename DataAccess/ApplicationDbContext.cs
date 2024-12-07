@@ -45,6 +45,15 @@ namespace DataAccess
 .HasForeignKey(c => c.MemberId)
 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<StudentPhone>()
+            .Property(c => c.StudentPhoneId)
+            .ValueGeneratedOnAdd();
+
+
+            builder.Entity<MemberPhone>()
+            .Property(c => c.MemberPhoneId)
+            .ValueGeneratedOnAdd();
+
         }
 
     }

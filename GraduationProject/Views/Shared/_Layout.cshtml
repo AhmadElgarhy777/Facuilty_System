@@ -29,7 +29,7 @@
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Registeration</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddAdmin">Add Admin</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddStudent">Add Student</a>
@@ -37,13 +37,32 @@
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddAssistant">Add Assistant</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddEmpolyee">Add Empolyee</a>
                               
+
+                                <div class="dropdown-divider">
+
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index">Details Student</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Professor">Details Proffesors</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Assistant">Details Assistants</a>
                                  <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Empolyee">Details Empolyee</a>
 
-                                <div class="dropdown-divider"></div>
+                                </div>
                             </div>
+
+                        </li>
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Details</a>
+                            <div class="dropdown-menu">
+                               
+                               
+
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index">Details Student</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Professor">Details Proffesors</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Assistant">Details Assistants</a>
+                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Empolyee">Details Empolyee</a>
+
+                                
+                            </div>
+
                         </li>
 
  

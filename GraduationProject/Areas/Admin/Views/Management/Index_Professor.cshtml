@@ -3,6 +3,10 @@
 @model List<Member>
 
 @section Scripts {
+
+    <partial name="_TempDataPartial.cshtml">
+        <partial name="_ValidationScriptsPartial.cshtml">
+}
     @if (@TempData["success"] != null)
     {
         <script>

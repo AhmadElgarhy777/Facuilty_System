@@ -50,6 +50,12 @@ namespace DataAccess.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
+            
+        }
+        public void AddRange(List<T> entity)
+        {
+            dbSet.AddRange(entity);
+            
         }
 
         public void Edit(T entity)

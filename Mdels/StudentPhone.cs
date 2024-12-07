@@ -8,9 +8,9 @@ namespace Models
 {
     public class StudentPhone
     {
-        public int StudentPhoneId { get; set; } 
+        public int StudentPhoneId { get; set; }
 
-        public int StudentId { get; set; }
+        public string StudentId { get; set; } = null!;
         public string Phone { get; set; }
         public Student Student { get; set; }
                     

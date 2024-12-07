@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Utility;
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DataAccess.Repository;
 
 namespace GraduationProject.Areas.Admin.Controllers
 {
@@ -13,6 +14,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
     public class RegisterationController : Controller
     {
+        private readonly IStudentPhoneRepository studentPhoneRepository;
         private readonly IStudentRepository studentRepository;
         private readonly IMemberRepository memberRepository;
         private readonly IEmployeeRepository employeeRepository;
@@ -21,8 +23,9 @@ namespace GraduationProject.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<IdentityUser> signinmanager;
 
-        public RegisterationController(IStudentRepository studentRepository,IMemberRepository memberRepository,IEmployeeRepository employeeRepository ,IDepartmentRepository departmentRepository, UserManager<IdentityUser> usermanger, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signinmanager)
+        public RegisterationController(IStudentPhoneRepository studentPhoneRepository,IStudentRepository studentRepository,IMemberRepository memberRepository,IEmployeeRepository employeeRepository ,IDepartmentRepository departmentRepository, UserManager<IdentityUser> usermanger, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signinmanager)
         {
+            this.studentPhoneRepository = studentPhoneRepository;
             this.studentRepository = studentRepository;
             this.memberRepository = memberRepository;
             this.employeeRepository = employeeRepository;
@@ -133,6 +136,16 @@ namespace GraduationProject.Areas.Admin.Controllers
                         DepartmentId = student.DepartmentId
 
                     };
+                    //if (student.studentPhones != null && student.studentPhones.Any())
+                    //{
+                    //    var studentPhones = student.studentPhones
+                    //        .Where(p => !string.IsNullOrWhiteSpace(p))
+                    //        .Select(p => new StudentPhone { StudentId = applicationUser.Id, Phone = p })
+                    //    .ToList();
+
+                    //    studentPhoneRepository.AddRange(studentPhones);
+                    //    studentPhoneRepository.Commit();
+                    //}
                     studentRepository.Add(studentinstance);
                     studentRepository.Commit();
                     TempData["message"] = $"The Student is added sucsesufuly ";

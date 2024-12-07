@@ -10,7 +10,7 @@ namespace Models
     {
         public int MemberPhoneId { get; set; } // Primary key for StudentPhone
 
-        public int MemberId { get; set; }
+        public string MemberId { get; set; }
         public string Phone { get; set; }
         public Member Member { get; set; }
     }

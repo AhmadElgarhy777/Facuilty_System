@@ -48,6 +48,8 @@ namespace Models.ViewModels
         public DateTime BirthDate { get; set; }
         [Required]
         public int DepartmentId { get; set; }
+        public List<string> studentPhones { get; set; } = new List<string>();
+
 
 
     }

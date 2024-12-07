@@ -1,5 +1,10 @@
 ﻿@using Models
 @model Student
+@section Scripts {
+
+    <partial name="_TempDataPartial.cshtml">
+        <partial name="_ValidationScriptsPartial.cshtml">
+}
 <div class="row mb-3">
     <h2><a href="/Management/Index"><i class="bi bi-arrow-left"></i></a> Edit Student</h2>
 </div>
