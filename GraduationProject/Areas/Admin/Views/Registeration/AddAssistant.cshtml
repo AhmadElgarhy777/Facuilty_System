@@ -33,7 +33,11 @@
                         <input type="text" class="form-control" asp-for="LName">
                         <span asp-validation-for="LName" class="text-warning"></span>
                     </div>
+
+                    <input type="hidden" id="ProfessorName" name="IsProfessor" value="0">
+
                 </div>
+                <input type="hidden" class="form-control" id="ProfessorName" name="IsProfessor" value="@false">
 
                 <div class=" mb-3">
             @*   <div class="profile-img">

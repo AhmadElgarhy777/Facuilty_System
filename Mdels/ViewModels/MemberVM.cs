@@ -24,6 +24,7 @@ namespace Models.ViewModels
         [MaxLength(40)]
 
         public string MName { get; set; } = null!;
+        public int IsProfessor { get; set; }
         [Required]
         [DataType(DataType.Text)]
         [MaxLength(20)]

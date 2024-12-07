@@ -207,7 +207,8 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                         Nationailty = member.Nationailty,
                         Experence=member.Experence,
                         ImgUrl=member.ImgUrl,
-                        DepartmentId = member.DepartmentId
+                        DepartmentId = member.DepartmentId,
+                        IsProfessor = member.IsProfessor
 
                     };
                     memberRepository.Add(ProfMemberInstance);
@@ -287,7 +288,8 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                         Nationailty = member.Nationailty,
                         Experence=member.Experence,
                         ImgUrl=member.ImgUrl,
-                        DepartmentId = member.DepartmentId
+                        DepartmentId = member.DepartmentId,
+                        IsProfessor = member.IsProfessor
 
                     };
                     memberRepository.Add(ProfMemberInstance);

@@ -32,6 +32,7 @@ namespace Models
         public string LName { get; set; } = null!;
         [ValidateNever]
         public string ImgUrl { get; set; }
+        public int IsProfessor { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(max)")]
