@@ -7,7 +7,7 @@ using Utility;
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
+namespace GraduationProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
@@ -57,6 +57,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                 {
                     UserName = admin.Name,
                     Email = admin.Email,
+                    RoleName="Admin"
 
                 };
                 var result = await usermanger.CreateAsync(applicationUser, admin.Password);
@@ -106,6 +107,8 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                     UserName = student.FName + "_" + student.MName + "_" + student.LName,
                     Email = student.Email,
                     Address = student.Address,
+                    RoleName = "Student"
+
                 };
                 var result = await usermanger.CreateAsync(applicationUser, student.SSN);
 
@@ -185,7 +188,9 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                     UserName = member.FName + "_" + member.MName + "_" + member.LName,
                     Email = member.Email,
                     Address = member.Address,
-                    
+                    RoleName = "Professor"
+
+
                 };
                 var result = await usermanger.CreateAsync(applicationUser, member.SSN);
 
@@ -267,6 +272,8 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                     UserName = member.FName + "_" + member.MName + "_" + member.LName,
                     Email = member.Email,
                     Address = member.Address,
+                    RoleName = "Assistant"
+
                 };
                 var result = await usermanger.CreateAsync(applicationUser, member.SSN);
 
@@ -344,6 +351,8 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                     UserName = employee.FName + "_" + employee.MName + "_" + employee.LName,
                     Email = employee.Email,
                     Address = employee.Address,
+                    RoleName = "Employee"
+
                 };
                 var result = await usermanger.CreateAsync(applicationUser, employee.SSN);
 
