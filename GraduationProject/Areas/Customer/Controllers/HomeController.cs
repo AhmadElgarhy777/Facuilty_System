@@ -1,8 +1,9 @@
 using Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
-namespace GraduationProject__FacuiltySystem__.Areas.Customer.Controllers
+namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
     public class HomeController : Controller

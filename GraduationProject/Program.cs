@@ -7,7 +7,7 @@ using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
 using Models;
 
-namespace GraduationProject__FacuiltySystem__
+namespace GraduationProject
 {
     public class Program
     {
@@ -44,6 +44,11 @@ namespace GraduationProject__FacuiltySystem__
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
 
+                    options.SignIn.RequireConfirmedEmail = false; 
+                    options.SignIn.RequireConfirmedPhoneNumber = false;
+                    options.SignIn.RequireConfirmedAccount=false;
+
+                     options.Lockout.AllowedForNewUsers = false;
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
