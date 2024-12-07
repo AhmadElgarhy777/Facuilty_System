@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +24,22 @@ namespace Models
         [Required]
         public EnumLevel CourseLevel { get; set; }
 
+        [ValidateNever]
         public List<Lectures> Lectures { get; set; }
+
+        [ValidateNever]
         public List<Sections> Sections { get; set; }
+
+        [ValidateNever]
         public List<StudentCourse> StudentCourses { get; set; }
+
+        [ValidateNever]
         public Member Member { get; set; }
+
+        [ValidateNever]
         public Department Department { get; set; }
         public string MemberId { get; set; } 
-        public string DepartmentId { get; set; } 
+        public int DepartmentId { get; set; } 
 
 
 

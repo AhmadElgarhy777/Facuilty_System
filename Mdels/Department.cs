@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Models
         public string NumOfCourses { get; set; }
         public ICollection<Student> Students { get; } = new List<Student>();
         public ICollection<Member> members { get; } = new List<Member>();
+
+        [ValidateNever]
         public List<Course> Courses { get; set; }
 
 
