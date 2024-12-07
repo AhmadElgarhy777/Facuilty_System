@@ -16,6 +16,8 @@ namespace DataAccess
         public DbSet<MemberPhone> MemberPhones { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Lectures> Lectures { get; set; }
+        public DbSet<Sections> Sections { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
         public ApplicationDbContext()

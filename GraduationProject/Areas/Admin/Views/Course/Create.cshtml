@@ -1,0 +1,71 @@
+﻿using Models;
+@model Models.Course
+
+@{
+    ViewData["Title"] = "Create Course";
+}
+
+<h1>Create</h1>
+
+<h4>Course</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CourseId" class="control-label"></label>
+                <input asp-for="CourseId" class="form-control" />
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hourse" class="control-label">Hours</label>
+                <input asp-for="Hourse" class="form-control" />
+                <span asp-validation-for="Hourse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Degree" class="control-label"></label>
+                <input asp-for="Degree" class="form-control" />
+                <span asp-validation-for="Degree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentUrl" class="control-label"></label>
+                <input asp-for="DocumentUrl" class="form-control" />
+                <span asp-validation-for="DocumentUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseLevel" class="control-label"></label>
+                 <select asp-for="CourseLevel" class="form-control" asp-items="@(new SelectList(Enum.GetValues(typeof(EnumLevel))))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label">Member</label>
+                <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.members"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label">Department</label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.departments"></select>
+            </div> <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

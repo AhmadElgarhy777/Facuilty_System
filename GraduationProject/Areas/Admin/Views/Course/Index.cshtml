@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Courses";
+}
+
+
+@model List<Course>
+
+<div class="row mb-3">
+    <div class="col-9">
+        <h1 style="font-size: 2.5em; font-weight: bold;">Courses</h1>
+    </div>
+    <div class="col-3">
+        <a href="/Admin/Course/Create" class="btn btn-danger">Create New Course</a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th style="width: 15%;" scope="col">Name</th>
+            <th style="width: 10%;" scope="col">Number Of Hours</th>
+            <th style="width: 10%;" scope="col">Degree</th>
+            <th style="width: 10%;" scope="col">Document Url</th>
+            <th style="width: 10%;" scope="col">Course Level</th>
+            <th style="width: 15%;" scope="col">Member Name</th>
+            <th style="width: 15%;" scope="col">Department</th>
+            <th style="width: 15%;" scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-light">
+                <td>@item.Name</td>
+                <td>@item.Hourse</td>
+                <td>@item.Degree</td>
+                <td><a href="@item.DocumentUrl">Document</a></td>
+                <td>@item.CourseLevel</td>
+                <td>@item.Member.FName @item.Member.MName @item.Member.LName</td>
+                <td>@item.Department.Name</td>
+
+                <td>
+                    <a href="/Admin/Course/Edit?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Edit</a>
+                     <a href="#" class="btn btn-dark btn-delete" data-id="@item.CourseId" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this course?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post" action="">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="courseId" id="deleteCourseId" />
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteButtons = document.querySelectorAll('.btn-delete');
+        var deleteForm = document.getElementById('deleteForm');
+        var courseIdInput = document.getElementById('deleteCoursetId');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var courseId = this.getAttribute('data-id');
+                // Update the hidden input with the course ID
+                courseIdInput.value = courseId;
+                // Update the form action URL
+                deleteForm.action = '/Admin/Course/Delete';
+            });
+        });
+    });
+</script>
+
