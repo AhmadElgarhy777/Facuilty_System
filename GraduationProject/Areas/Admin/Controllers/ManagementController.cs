@@ -29,8 +29,21 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
         }
         public IActionResult Index(string search = null, int page = 1)
         {
-            var students = studentRepository.GetAll([e => e.Department]);   
+            int pageSize = 5;
+            var totalProducts = studentRepository.GetAll([]).Count();
+            ;
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Student> students = studentRepository.GetAll([e => e.Department]);
+            ;
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
+ 
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.Trim();
@@ -41,6 +54,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                     ViewBag.ErrorMessage = "No students found with that SSN.";   
                 }
             }
+            students = students.Skip((page - 1) * pageSize).Take(pageSize);
 
             return View(students.ToList());
         }
@@ -124,21 +138,35 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Index_Professor(string search = null)
+        public IActionResult Index_Professor(int page = 1, string search = null)
         {
-            var students = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1);
+ 
+            int pageSize = 5;
+            var totalProducts = memberRepository.GetAll([]).Count();
+            ;
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Member> Professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1);
+            ;
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.Trim();
-                students = students.Where(e => e.SSN.Contains(search));
+                Professors = Professors.Where(e => e.SSN.Contains(search));
 
-                if (!students.Any())
+                if (!Professors.Any())
                 {
                     ViewBag.ErrorMessage = "No Professors found with that SSN.";
                 }
             }
+            Professors = Professors.Skip((page - 1) * pageSize).Take(pageSize);
 
-            return View(students.ToList());
+            return View(Professors.ToList());
 
         }
         public IActionResult Edit_Professor(string Memberid)
@@ -226,21 +254,35 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
 
 
 
-        public IActionResult Index_Assistant(string search = null)
+        public IActionResult Index_Assistant(int page = 1, string search = null)
         {
-            var students = memberRepository.GetAll([e => e.Department] , e=>e.IsProfessor==0);
+ 
+
+            int pageSize = 5;
+            var totalProducts = memberRepository.GetAll([]).Count();
+            ;
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Member> Assistants = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 0);
+            ;
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.Trim();
-                students = students.Where(e => e.SSN.Contains(search));
+                Assistants = Assistants.Where(e => e.SSN.Contains(search));
 
-                if (!students.Any())
+                if (!Assistants.Any())
                 {
                     ViewBag.ErrorMessage = "No Assistants found with that SSN.";
                 }
             }
+            Assistants = Assistants.Skip((page - 1) * pageSize).Take(pageSize);
 
-            return View(students.ToList());
+            return View(Assistants.ToList());
 
         }
         public IActionResult Edit_Assistant(string Memberid)
@@ -326,9 +368,23 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
 
 
 
-        public IActionResult Index_Empolyee(string search = null)
+        public IActionResult Index_Empolyee(int page = 1, string search = null)
         {
-            var employees = employeeRepository.GetAll(); if (!string.IsNullOrEmpty(search))
+ 
+
+            int pageSize = 5;
+            var totalProducts = memberRepository.GetAll([]).Count();
+            ;
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Employee> employees = employeeRepository.GetAll();
+            ;
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            if (!string.IsNullOrEmpty(search))
             {
                 search = search.Trim();
                 employees = employees.Where(e => e.SSN.Contains(search));
@@ -338,6 +394,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                     ViewBag.ErrorMessage = "No Employees found with that SSN.";
                 }
             }
+            employees = employees.Skip((page - 1) * pageSize).Take(pageSize);
 
 
             return View(employees.ToList());
