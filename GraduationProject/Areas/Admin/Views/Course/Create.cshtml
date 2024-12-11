@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CourseId" class="control-label"></label>
-                <input asp-for="CourseId" class="form-control" />
+                <input type="hidden" asp-for="CourseId" class="form-control" />
                 <span asp-validation-for="CourseId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DocumentUrl" class="control-label"></label>
-                <input asp-for="DocumentUrl" class="form-control" />
+                <input accept="" asp-for="DocumentUrl" class="form-control" />
                 <span asp-validation-for="DocumentUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,11 +49,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label">Member</label>
-                <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.members"></select>
+                <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.members"><option>Select Member</option></select>
             </div>
             <div class="form-group">
                 <label asp-for="DepartmentId" class="control-label">Department</label>
-                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.departments"></select>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.departments"><option>Select Member</option></select>
             </div> <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
