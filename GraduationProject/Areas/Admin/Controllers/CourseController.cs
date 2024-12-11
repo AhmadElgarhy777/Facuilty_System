@@ -23,10 +23,37 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             this.MemberRepository = memberRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, string search = null)
         {
-            var courses = CourseRepository.GetAll([e => e.Department, e => e.Member]).ToList();
-            return View(model: courses);
+
+            int pageSize = 5;
+            var totalProducts = CourseRepository.GetAll([]).Count();
+            ;
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Course> courses = CourseRepository.GetAll([e => e.Department, e => e.Member]);
+            ;
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.Trim();
+                courses = courses.Where(e => e.Name.Contains(search));
+
+                if (!courses.Any())
+                {
+                    ViewBag.ErrorMessage = "No Courses found with that Name.";
+                }
+            }
+
+            courses = courses.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return View(model: courses.ToList());
         }
 
         public IActionResult Create()

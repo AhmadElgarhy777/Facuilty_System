@@ -1,4 +1,5 @@
-﻿using DataAccess.Repository.IRepository;
+﻿using DataAccess.Repository;
+using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -14,10 +15,35 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
         {
             this.DepartmentRepository = DepartmentRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, string search = null)
         {
-            var departments = DepartmentRepository.GetAll().ToList();
-            return View(model: departments);
+             int pageSize = 5;
+            var totalProducts = DepartmentRepository.GetAll([]).Count();
+            ;
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Department> departments = DepartmentRepository.GetAll();
+            ;
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.Trim();
+                departments = departments.Where(e => e.Name.Contains(search));
+
+                if (!departments.Any())
+                {
+                    ViewBag.ErrorMessage = "No department found with that Name.";
+                }
+            }
+            departments = departments.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return View(model: departments.ToList());
         }
 
         public IActionResult Create()

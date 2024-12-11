@@ -463,8 +463,10 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberPhoneId"));
 
-                    b.Property<string>("MemberId")
-                        .IsRequired()
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MemberId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Phone")
@@ -473,7 +475,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("MemberPhoneId");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("MemberId1");
 
                     b.ToTable("MemberPhones", (string)null);
                 });
@@ -624,15 +626,13 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("StudentId1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("StudentLevel")
+                    b.Property<int?>("StudentLevel")
                         .HasColumnType("int");
 
                     b.HasKey("StudentPhoneId");
@@ -752,9 +752,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Models.Member", "Member")
                         .WithMany("memberPhones")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MemberId1");
 
                     b.Navigation("Member");
                 });
@@ -802,9 +800,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Models.Student", "Student")
                         .WithMany("studentPhones")
-                        .HasForeignKey("StudentId1", "StudentLevel")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentId1", "StudentLevel");
 
                     b.Navigation("Student");
                 });

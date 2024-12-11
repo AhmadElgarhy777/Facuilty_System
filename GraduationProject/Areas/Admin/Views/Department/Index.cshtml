@@ -1,18 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Departments";
-}
-
-
+﻿ 
 @model List<Department>
 
 <div class="row mb-3">
-    <div class="col-9">
+    <div class="col-md-9">
         <h1 style="font-size: 2.5em; font-weight: bold;">Departments</h1>
     </div>
-    <div class="col-3">
+    <div class="col-md-3">
         <a href="/Admin/Department/Create" class="btn btn-danger">Create New Department</a>
     </div>
 </div>
+
+<div class="row">
+    <form action="/Admin/Department/Index">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input type="text" placeholder="Search by Name..." class="form-control" name="search">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-warning">@ViewBag.ErrorMessage</div>
+    }
 
 <table class="table table-hover">
     <thead>
@@ -80,3 +93,28 @@
         });
     });
 </script>
+
+
+
+
+    </script>
+    @{
+        var count = Model.Count;
+    }
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", "Department", new { page = ViewBag.CurrentPage - 1 })">Previous</a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", "Department", new { page = i })">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", "Department", new { page = ViewBag.CurrentPage + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>

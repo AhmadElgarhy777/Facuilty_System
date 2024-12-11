@@ -3,32 +3,101 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GraduationProject__FacuiltySystem__</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"  />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GraduationProject__FacuiltySystem__.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - Graduation Project</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
 
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 10px;
+        }
+
+            .sidebar .brand {
+                text-align: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #fff;
+                margin-bottom: 20px;
+            }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                .sidebar ul li a {
+                    display: flex;
+                    align-items: center;
+                    color: #d1d3e2;
+                    text-decoration: none;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    border-radius: 5px;
+                    transition: all 0.3s ease-in-out;
+                }
+
+                    .sidebar ul li a:hover {
+                        background-color: #2c2f33;
+                        color: white;
+                    }
+
+                    .sidebar ul li a i {
+                        margin-right: 10px;
+                        font-size: 1.2rem;
+                    }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        footer {
+            margin-top: 20px;
+            background: #224abe;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #c7c7c7;
+        }
+
+            .dark-mode .sidebar {
+                background: #1a1a2e;
+            }
+
+            .dark-mode footer {
+                background: #1a1a2e;
+            }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">Computer Science Facuilty</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item dropdown">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="brand">Computer Science Faculty</div>
+        <ul>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>
+            <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Registeration</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddAdmin">Add Admin</a>
@@ -55,10 +124,10 @@
                                
                                
 
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index">Details Student</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Professor">Details Proffesors</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Assistant">Details Assistants</a>
-                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Empolyee">Details Empolyee</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index"> Student</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Professor"> Proffesors</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Assistant"> Assistants</a>
+                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Empolyee"> Empolyee</a>
 
                                 
                             </div>
@@ -72,8 +141,8 @@
 
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Index"> Departement</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Create">Add Departement</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Edit">Edit Departement</a>
-                               
+@*                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Edit">Edit Departement</a>
+ *@                               
                                 
                             </div>
                                 
@@ -86,36 +155,47 @@
 
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Index"> Course</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Create">Add Course</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Edit">Edit Course</a>
-                               
+@*                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Edit">Edit Course</a>
+ *@                               
                                 
                             </div>
 
-                        </li>
+                        </li>     
+                        </ul>
+        <Partial name="_LoginPartial.cshtml"></Partial>
 
- 
-                    </ul>
-                    <Partial name="_LoginPartial.cshtml"></Partial>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h4">@ViewData["Title"]</h1>
+            <button id="darkModeToggle" class="btn btn-outline-secondary"><i class="bi bi-moon"></i> Dark Mode</button>
+        </header>
+        <main>
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - GraduationProject__FacuiltySystem__ - <a asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <!-- Footer -->
+    <footer>
+        &copy; @DateTime.Now.Year - Graduation Project
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        // Toggle Dark Mode
+        const toggleBtn = document.getElementById('darkModeToggle');
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            toastr.success('Dark Mode Toggled');
+        });
+
+        // Toast Example
+        window.onload = () => toastr.info('Welcome to the Graduation Project!');
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
