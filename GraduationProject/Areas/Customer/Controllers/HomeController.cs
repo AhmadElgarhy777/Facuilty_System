@@ -14,25 +14,32 @@ namespace GraduationProject.Areas.Customer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStudentRepository studentRepository;
+        private readonly IMemberRepository memberRepository;
 
-        public HomeController(ILogger<HomeController> logger , IStudentRepository studentRepository)
+        public HomeController(ILogger<HomeController> logger , IStudentRepository studentRepository , IMemberRepository memberRepository)
         {
             _logger = logger;
             this.studentRepository = studentRepository;
+            this.memberRepository = memberRepository;
 
         }
 
         public IActionResult Index()
         {
+            ViewBag.professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1); 
             var students = studentRepository.GetOne([e => e.Department],e=>e.SSN == "123-45-6").FirstOrDefault();
             return View(students);
         }
 
         public IActionResult Privacy()
         {
-            return View();
+           return View();
         }
+        public IActionResult About_Faculty()
+        {
 
+             return View( );
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
