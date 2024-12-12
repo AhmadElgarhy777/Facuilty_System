@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace GraduationProject__FacuiltySystem__.Areas.Identity.Pages.Account
+namespace GraduationProject.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {

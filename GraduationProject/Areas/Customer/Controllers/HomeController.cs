@@ -27,7 +27,7 @@ namespace GraduationProject.Areas.Customer.Controllers
         public IActionResult Index()
         {
             ViewBag.professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1); 
-            var students = studentRepository.GetOne([e => e.Department],e=>e.SSN == "123-45-6").FirstOrDefault();
+            var students = studentRepository.GetOne([e => e.Department],e=>e.SSN == "12345678910111").FirstOrDefault();
             return View(students);
         }
 

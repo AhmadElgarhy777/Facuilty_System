@@ -58,7 +58,7 @@ namespace GraduationProject.Areas.Admin.Controllers
             {
                 ApplicationUser applicationUser = new()
                 {
-                    UserName = admin.Name,
+                    UserName = admin.Email,
                     Email = admin.Email,
                     RoleName="Admin"
 
@@ -66,8 +66,8 @@ namespace GraduationProject.Areas.Admin.Controllers
                 var result = await usermanger.CreateAsync(applicationUser, admin.Password);
                 if (result.Succeeded)
                 {
-                    TempData["message"] = $"The admin is added sucsesufuly ";
                     await usermanger.AddToRoleAsync(applicationUser, SD.AdminRole);
+                    TempData["message"] = $"The admin is added sucsesufuly ";
                     return View();
                 }
                 else
@@ -107,7 +107,8 @@ namespace GraduationProject.Areas.Admin.Controllers
                 }
                 ApplicationUser applicationUser = new()
                 {
-                    UserName = student.FName + "_" + student.MName + "_" + student.LName,
+                    //UserName = student.FName + "_" + student.MName + "_" + student.LName,
+                    UserName=student.Email,
                     Email = student.Email,
                     Address = student.Address,
                     RoleName = "Student"
@@ -198,7 +199,8 @@ namespace GraduationProject.Areas.Admin.Controllers
                 }
                 ApplicationUser applicationUser = new()
                 {
-                    UserName = member.FName + "_" + member.MName + "_" + member.LName,
+                    //UserName = member.FName + "_" + member.MName + "_" + member.LName,
+                    UserName = member.Email,
                     Email = member.Email,
                     Address = member.Address,
                     RoleName = "Professor"
@@ -282,7 +284,8 @@ namespace GraduationProject.Areas.Admin.Controllers
                 }
                 ApplicationUser applicationUser = new()
                 {
-                    UserName = member.FName + "_" + member.MName + "_" + member.LName,
+                    //UserName = member.FName + "_" + member.MName + "_" + member.LName,
+                    UserName = member.Email,
                     Email = member.Email,
                     Address = member.Address,
                     RoleName = "Assistant"
@@ -361,7 +364,8 @@ namespace GraduationProject.Areas.Admin.Controllers
                 }
                 ApplicationUser applicationUser = new()
                 {
-                    UserName = employee.FName + "_" + employee.MName + "_" + employee.LName,
+                    //UserName = employee.FName + "_" + employee.MName + "_" + employee.LName,
+                    UserName = employee.Email,
                     Email = employee.Email,
                     Address = employee.Address,
                     RoleName = "Employee"

@@ -28,13 +28,15 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             int pageSize = 5;
             var totalProducts = CourseRepository.GetAll([]).Count();
-            ;
-            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            
+            //var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalProducts / pageSize));
+
 
             if (page <= 0) page = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Course> courses = CourseRepository.GetAll([e => e.Department, e => e.Member]);
-            ;
+            
 
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;

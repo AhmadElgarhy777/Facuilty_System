@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Models;
 
-namespace GraduationProject__FacuiltySystem__.Areas.Identity.Pages.Account
+namespace GraduationProject.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
