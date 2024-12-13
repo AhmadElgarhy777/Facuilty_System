@@ -56,7 +56,7 @@ namespace Models
         public int Experence { get; set; }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
-        public List<MemberPhone> memberPhones { get; set; }
+        public List<MemberPhone> MemberPhones { get; set; }
         public List<Course> Courses { get; set; }
 
     }

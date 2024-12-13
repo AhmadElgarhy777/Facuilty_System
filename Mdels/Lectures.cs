@@ -9,13 +9,13 @@ namespace Models
 {
     public class Lectures
     {
-        public int LecturesID { get; set; }
+        public int LecturesId { get; set; }
         [Required]
         public string Name { get; set; } = null!;
         [Required]
         public string LecURL { get; set; }= null!;
         public int CourseId { get; set; }
-        public EnumLevel CourseLevel { get; set; }
+        //public EnumLevel CourseLevel { get; set; }
 
         public Course Course { get; set; }
     }

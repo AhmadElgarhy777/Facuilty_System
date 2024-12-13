@@ -16,8 +16,8 @@ namespace Models
         [Required]
 
         public string Description { get; set; } = null!;
-        public string NumOfStudent { get; set; }
-        public string NumOfCourses { get; set; }
+        public int NumOfStudent { get; set; }
+        public int NumOfCourses { get; set; }
         public ICollection<Student> Students { get; } = new List<Student>();
         public ICollection<Member> members { get; } = new List<Member>();
 

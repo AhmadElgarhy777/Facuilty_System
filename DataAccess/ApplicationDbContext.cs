@@ -26,9 +26,9 @@ namespace DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Student>().HasKey(k => new { k.StudentId, k.Level });
-            builder.Entity<Course>().HasKey(k => new { k.CourseId, k.CourseLevel });
-            builder.Entity<StudentCourse>().HasKey(k => new { k.CourseId, k.CourseLevel, k.StudentId, k.Level });
+            //builder.Entity<Student>().HasKey(k => new { k.StudentId, k.Level });
+            //builder.Entity<Course>().HasKey(k => new { k.CourseId, k.CourseLevel });
+            //builder.Entity<StudentCourse>().HasKey(k => new { k.CourseId, k.CourseLevel, k.StudentId, k.Level });
 
          
             builder.Entity<IdentityRole>().ToTable("IdentityRole", "Securty");
@@ -41,20 +41,21 @@ namespace DataAccess
 
             //builder.Entity<Student>().ToTable("Students", "Models");
 
-            builder.Entity<Course>()
-.HasOne(c => c.Member)
-.WithMany(m => m.Courses)
-.HasForeignKey(c => c.MemberId)
-.OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Course>().HasOne(c => c.Member).WithMany(m => m.Courses).HasForeignKey(c => c.MemberId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<StudentPhone>()
-            .Property(c => c.StudentPhoneId)
-            .ValueGeneratedOnAdd();
+            builder.Entity<StudentCourse>().HasOne(s => s.Student).WithMany(sc => sc.StudentCourses).HasForeignKey(c => c.StudentId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<StudentCourse>().HasOne(s => s.Course).WithMany(sc => sc.StudentCourses).HasForeignKey(c => c.CourseId).OnDelete(DeleteBehavior.Restrict);
 
 
-            builder.Entity<MemberPhone>()
-            .Property(c => c.MemberPhoneId)
-            .ValueGeneratedOnAdd();
+            //builder.Entity<StudentPhone>()
+            //.Property(c => c.StudentPhoneId)
+            //.ValueGeneratedOnAdd();
+
+
+            //builder.Entity<MemberPhone>()
+            //.Property(c => c.MemberPhoneId)
+            //.ValueGeneratedOnAdd();
 
         }
 

@@ -54,7 +54,7 @@ namespace Models
         
         public List<StudentCourse> StudentCourses { get; set; }
 
-        public List<StudentPhone> studentPhones { get; set; }
+        public List<StudentPhone> StudentPhones { get; set; }
 
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
