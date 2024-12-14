@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using System.Reflection.Emit;
+
 namespace DataAccess
 {
-    public class ApplicationDbContext :IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -18,46 +18,66 @@ namespace DataAccess
         public DbSet<Department> Departments { get; set; }
         public DbSet<Lectures> Lectures { get; set; }
         public DbSet<Sections> Sections { get; set; }
+        public DbSet<Timetable> Timetables { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) { }
+            : base(options) { }
+
         public ApplicationDbContext()
         { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //builder.Entity<Student>().HasKey(k => new { k.StudentId, k.Level });
-            //builder.Entity<Course>().HasKey(k => new { k.CourseId, k.CourseLevel });
-            //builder.Entity<StudentCourse>().HasKey(k => new { k.CourseId, k.CourseLevel, k.StudentId, k.Level });
 
-         
-            builder.Entity<IdentityRole>().ToTable("IdentityRole", "Securty");
-            builder.Entity<IdentityUser>().ToTable("IdentityUser", "Securty");
-            builder.Entity<IdentityUserRole<string>>().ToTable("IdentityUserRole", "Securty");
-            builder.Entity<IdentityUserClaim<string>>().ToTable("IdentityUserClaim", "Securty");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("IdentityUserLogin", "Securty");
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("IdentityRoleClaim", "Securty");
-            builder.Entity<IdentityUserToken<string>>().ToTable("IdentityUserToken", "Securty");
+            // تخصيص الجداول الأساسية لـ ASP.NET Identity
+            builder.Entity<IdentityRole>().ToTable("IdentityRole", "Security");
+            builder.Entity<IdentityUser>().ToTable("IdentityUser", "Security");
+            builder.Entity<IdentityUserRole<string>>().ToTable("IdentityUserRole", "Security");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("IdentityUserClaim", "Security");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("IdentityUserLogin", "Security");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("IdentityRoleClaim", "Security");
+            builder.Entity<IdentityUserToken<string>>().ToTable("IdentityUserToken", "Security");
 
-            //builder.Entity<Student>().ToTable("Students", "Models");
+            // العلاقة بين الجداول
+            builder.Entity<Course>()
+                .HasOne(c => c.Member)
+                .WithMany(m => m.Courses)
+                .HasForeignKey(c => c.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Course>().HasOne(c => c.Member).WithMany(m => m.Courses).HasForeignKey(c => c.MemberId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<StudentCourse>()
+                .HasOne(sc => sc.Student)
+                .WithMany(s => s.StudentCourses)
+                .HasForeignKey(sc => sc.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<StudentCourse>().HasOne(s => s.Student).WithMany(sc => sc.StudentCourses).HasForeignKey(c => c.StudentId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<StudentCourse>()
+                .HasOne(sc => sc.Course)
+                .WithMany(c => c.StudentCourses)
+                .HasForeignKey(sc => sc.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<StudentCourse>().HasOne(s => s.Course).WithMany(sc => sc.StudentCourses).HasForeignKey(c => c.CourseId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Timetable>()
+                .HasOne(t => t.Section)
+                .WithMany(s => s.Timetables)
+                .HasForeignKey(t => t.SectionId)
+                .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Timetable>()
+                .HasOne(t => t.Lecture)
+                .WithMany(l => l.Timetables)
+                .HasForeignKey(t => t.LectureId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.Entity<StudentPhone>()
-            //.Property(c => c.StudentPhoneId)
-            //.ValueGeneratedOnAdd();
+            // إعداد القيم التلقائية (auto-increment) بشكل صحيح
+            builder.Entity<StudentPhone>()
+                .Property(sp => sp.StudentPhoneId)
+                .ValueGeneratedOnAdd();
 
-
-            //builder.Entity<MemberPhone>()
-            //.Property(c => c.MemberPhoneId)
-            //.ValueGeneratedOnAdd();
-
+            builder.Entity<MemberPhone>()
+                .Property(mp => mp.MemberPhoneId)
+                .ValueGeneratedOnAdd();
         }
-
     }
 }

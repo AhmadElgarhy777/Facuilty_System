@@ -26,6 +26,9 @@ namespace GraduationProject
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IStudentPhoneRepository, StudentPhoneRepository>();
             builder.Services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
+            builder.Services.AddScoped<ITimetableRepository, TimetableRepository>();
+            builder.Services.AddScoped<ISectionRepository, SectionRepository>();
+            builder.Services.AddScoped<ILectureRepository, LectureRepository>();
 
             builder.Services.AddScoped<IMemberRepository, MemberRepository>();
             builder.Services.AddScoped<IMemberPhoneRepository, MemberPhoneRepository>();

@@ -122,12 +122,12 @@ namespace GraduationProject.Areas.Identity.Pages.Account
                     
                     }
 
-                    //else if (roles.Contains(SD.Student))
-                    //{
-                    //    var StudentID = user.Id;
-                    //    return RedirectToAction(nameof(Index), nameof(StudentDetailes), new { area = "Customer", StudentID });
+                    else if (roles.Contains(SD.Student))
+                    {
+                        var StudentID = user.Id;
+                        return RedirectToAction(nameof(Index), nameof(StudentDetailes), new { area = "Customer", StudentID });
 
-                    //}
+                    }
 
 
                 }
