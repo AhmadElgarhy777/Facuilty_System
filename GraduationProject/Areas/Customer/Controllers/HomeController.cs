@@ -26,20 +26,22 @@ namespace GraduationProject.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1); 
-            var students = studentRepository.GetOne([e => e.Department],e=>e.SSN == "12345678910111").FirstOrDefault();
-            return View(students);
+            //ViewBag.professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1); 
+            //var students = studentRepository.GetOne([e => e.Department],e=>e.SSN == "12345678910111").FirstOrDefault();
+            //return View(students);
+            return View();
+
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
            return View();
         }
-        public IActionResult About_Faculty()
+        public IActionResult Contact()
         {
-
-             return View( );
+           return View();
         }
+      
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

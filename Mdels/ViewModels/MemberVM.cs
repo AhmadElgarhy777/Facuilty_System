@@ -54,6 +54,7 @@ namespace Models.ViewModels
 
         public int Experence { get; set; }
         public int DepartmentId { get; set; }
-      
+        public List<string> MemberPhones { get; set; } = new List<string>();
+
     }
 }

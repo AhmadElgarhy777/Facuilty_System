@@ -1,27 +1,47 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Profile";
-    ViewData["ActivePage"] = ManageNavPages.Index;
-}
 
-<h3>@ViewData["Title"]</h3>
+
+<h3 class="mb-4">@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Profile Card -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4 class="mb-0">My Profile</h4>
+                </div>
+
+                <div class="card-body">
+                    <div class="text-center">
+                        <!-- Profile Image -->
+                        <img src="~/Img/@Model.ProfileImg"
+                             alt="User Profile Image"
+                             class="rounded-circle mb-3"
+                             style="width: 300px; height: 300px; object-fit: cover; border: 3px solid #007bff;">
+                    </div>
+
+                    <hr>
+
+                    <!-- User Details -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Full Name:</div>
+                        <div class="col-sm-8 text-secondary">@Model.FullName</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Email:</div>
+                        <div class="col-sm-8 text-secondary">@Model.Email</div>
+                    </div>
+
+                    <hr>
+                  
+
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
+        </div>
     </div>
 </div>
 

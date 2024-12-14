@@ -18,7 +18,7 @@ namespace GraduationProject.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
         {
             this.userManager = userManager;
             _signInManager = signInManager;
@@ -117,17 +117,17 @@ namespace GraduationProject.Areas.Identity.Pages.Account
                     if (roles.Contains(SD.Professor))
                     {
                         var ProfID = user.Id;
-                        return RedirectToAction(nameof(Index), nameof(ProfessorDetailes) , new {area= "Customer" , ProfID });
+                        return RedirectToAction(nameof(Index), "ProfessorDetailes", new { area = "Customer", ProfID });
 
-                    
+
                     }
 
-                    //else if (roles.Contains(SD.Student))
-                    //{
-                    //    var StudentID = user.Id;
-                    //    return RedirectToAction(nameof(Index), nameof(StudentDetailes), new { area = "Customer", StudentID });
+                    else if (roles.Contains(SD.Empolyee))
+                    {
+                        var EmpID = user.Id;
+                        return RedirectToAction(nameof(Index), "EmpolyeeDetailes", new { area = "Customer", EmpID });
 
-                    //}
+                    }
 
 
                 }
