@@ -85,8 +85,6 @@ namespace GraduationProject.Areas.Admin.Controllers
             ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
             var department = departmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
             ViewBag.department = department;
-
-
             return View();
         }
         [HttpPost]

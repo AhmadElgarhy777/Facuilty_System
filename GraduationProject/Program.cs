@@ -36,6 +36,10 @@ namespace GraduationProject
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
+            builder.Services.AddScoped<ILecturesRepository, LecturesRepository>();
+
+            builder.Services.AddScoped<ISectionsRepository, SectionsRepository>();
+
             builder.Services.AddIdentity<IdentityUser,IdentityRole>
                 (options => {
                     options.SignIn.RequireConfirmedAccount = false;

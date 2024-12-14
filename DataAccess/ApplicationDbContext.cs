@@ -47,6 +47,9 @@ namespace DataAccess
 
             builder.Entity<StudentCourse>().HasOne(s => s.Course).WithMany(sc => sc.StudentCourses).HasForeignKey(c => c.CourseId).OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Sections>().HasOne(s => s.Course).WithMany(c => c.Sections).HasForeignKey(s => new { s.CourseId }).HasConstraintName("FK_Sections_Course");
+
+            builder.Entity<Lectures>().HasOne(l => l.Course).WithMany(c => c.Lectures).HasForeignKey(l => new { l.CourseId }).OnDelete(DeleteBehavior.Cascade);
 
             //builder.Entity<StudentPhone>()
             //.Property(c => c.StudentPhoneId)
