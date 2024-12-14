@@ -1,0 +1,48 @@
+﻿@model Models.Sections
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Sections</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Section Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecURL" class="control-label">Section URL</label>
+                <input type="file" asp-for="SecURL" class="form-control" />
+                <span asp-validation-for="SecURL" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="CourseId" class="form-label">Course</label>
+                <select class="form-select" asp-for="CourseId" asp-items="ViewBag.Course" required>
+                    <option value="">Select Course</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a Course.
+                </div>
+                <span asp-validation-for="CourseId" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

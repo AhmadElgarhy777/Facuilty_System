@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Utility
+@using System.Security.Claims;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -105,12 +108,30 @@
     <nav class="sidebar">
         <div class="brand">Computer Science Faculty</div>
         <ul>
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-area="Customer" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door"></i> Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-area="Customer" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield"></i> Privacy</a>
-            </li>
+         @{
+            @if (User.IsInRole(SD.Professor))
+            {
+                <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="Customer" asp-controller="ProfessorDetailes" asp-action="Index" asp-route-ProfID="@User.FindFirstValue(ClaimTypes.NameIdentifier)"><i class="bi bi-house-door"></i> Home</a>
+                </li>
+            }
+           
+           else if (User.IsInRole(SD.Empolyee))
+            {
+                        <li class="nav-item">
+                                        <a class="nav-link text-white" asp-area="Customer" asp-controller="EmpolyeeDetailes" asp-action="Index" asp-route-EmpID="@User.FindFirstValue(ClaimTypes.NameIdentifier)"><i class="bi bi-house-door"></i> Home</a>
+                        </li>
+             }   
+             else if (User.IsInRole(SD.Asseitant))
+            {
+                        <li class="nav-item">
+                                        <a class="nav-link text-white" asp-area="Customer" asp-controller="Assistant" asp-action="Index" asp-route-AssID="@User.FindFirstValue(ClaimTypes.NameIdentifier)"><i class="bi bi-house-door"></i> Home</a>
+                        </li>
+             }   
+         }
+            
+
+           
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-pencil-square"></i> Registration</a>
                 <div class="dropdown-menu">
@@ -119,6 +140,7 @@
                     <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddProfessor"><i class="bi bi-person-plus"></i> Add Professor</a>
                     <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddAssistant"><i class="bi bi-person-plus"></i> Add Assistant</a>
                     <a class="dropdown-item" asp-area="Admin" asp-controller="Registeration" asp-action="AddEmpolyee"><i class="bi bi-person-plus"></i> Add Employee</a>
+                </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-list-task"></i> Details</a>
@@ -129,12 +151,8 @@
                     <a class="dropdown-item" asp-area="Admin" asp-controller="Management" asp-action="Index_Empolyee"><i class="bi bi-file-earmark"></i> Employee</a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-building"></i> Department</a>
-                <div class="dropdown-menu">
+            <li class="nav-item ">
                     <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Index"><i class="bi bi-building"></i> Department</a>
-                    <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Create"><i class="bi bi-plus"></i> Add Department</a>
-                </div>
             </li>
 
             <li class="nav-item dropdown">
@@ -150,12 +168,17 @@
                 <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-book"></i> Courses</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Index"><i class="bi bi-book"></i> Course</a>
-                    <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Create"><i class="bi bi-plus"></i> Add Course</a>
-                </div>
+            </li>
+            <li class="nav-item ">
+               
+                    <a class="dropdown-item" asp-area="Customer" asp-controller="Lectures" asp-action="Index"><i class="bi bi-book"></i> Lecture</a>
+            </li>
+            <li class="nav-item ">
+               
+                    <a class="dropdown-item" asp-area="Customer" asp-controller="Sections" asp-action="Index"><i class="bi bi-book"></i> Section</a>
             </li>
         </ul>
         <Partial name="_LoginPartial.cshtml"></Partial>
-        <a class="dropdown-item text-white" asp-area="Customer" asp-controller="Home" asp-action="About_Faculty"><i class="bi bi-info-circle"></i> About Faculty</a>
     </nav>
 
     <div class="main-content">

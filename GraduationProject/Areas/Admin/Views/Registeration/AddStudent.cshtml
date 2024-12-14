@@ -1,7 +1,7 @@
 ﻿@model Models.ViewModels.StudentVM
 @section Scripts {
-    <partial name="_TempDataPartial.cshtml">
-        <partial name="_ValidationScriptsPartial.cshtml">
+            <partial name="_TempDataPartial.cshtml" />
+            <partial name="_ValidationScriptsPartial.cshtml" />
 }
 
         <div class="container mt-5">
@@ -43,6 +43,18 @@
                         <span asp-validation-for="LName" class="text-warning"></span>
                     </div>
                 </div>
+
+        <div class="mb-3">
+            <label for="phoneNumbers" class="form-label">Phone Numbers</label>
+            <div id="phoneNumbersContainer">
+                <div class="d-flex align-items-center mb-2">
+                    <input type="text" name="studentPhones[0]" class="form-control me-2" placeholder="Enter phone number">
+                    <button type="button" class="btn btn-success btn-sm" id="addPhoneNumber">Add</button>
+                </div>
+            </div>
+        </div>
+
+
 
                 <div class="mb-3">
                     <label class="form-label">Upload Image</label>
@@ -134,25 +146,20 @@
             </form>
         </div>
 
-@* @section Scripts {
-        <script>
-        (function () {
-        'use strict';
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation');
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms).forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-        }
-
-        form.classList.add('was-validated');
-        }, false);
+    <script>
+        document.getElementById('addPhoneNumber').addEventListener('click', function () {
+            const container = document.getElementById('phoneNumbersContainer');
+            const index = container.querySelectorAll('input[type="text"]').length; 
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'd-flex align-items-center mb-2';
+            inputGroup.innerHTML = `
+                    <input type="text" name="PhoneNumbers" class="form-control me-2" placeholder="Enter phone number">
+                    <button type="button" class="btn btn-danger btn-sm removePhoneNumber">Remove</button>
+                `;
+            container.appendChild(inputGroup);
+            inputGroup.querySelector('.removePhoneNumber').addEventListener('click', function () {
+                container.removeChild(inputGroup);
+            });
         });
-        })();
-        </script>
-        } *@
+    </script>

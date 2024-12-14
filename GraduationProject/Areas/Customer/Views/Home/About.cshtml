@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "_HomeLayout";
+}
+<style>
+    /* About Section Styling */
+    .about-section {
+        background-color: #f4f4f4;
+        padding: 60px 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .about-header h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .about-header p {
+            font-size: 18px;
+            color: #666;
+        }
+
+    .about-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+    }
+
+    .about-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-card h2 {
+            font-size: 24px;
+            color: #0056b3;
+            margin-bottom: 15px;
+        }
+
+        .about-card p, .about-card ul {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .about-card ul {
+            text-align: left;
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+</style>
+<!-- About Section -->
+<section class="about-section">
+    <div class="container">
+        <div class="about-header">
+            <h1>About Our Faculty System</h1>
+            <p>Discover how we simplify faculty management and education systems with innovative solutions.</p>
+        </div>
+        <div class="about-content">
+            <div class="about-card">
+                <h2>Our Mission</h2>
+                <p>Our mission is to streamline faculty processes, manage resources efficiently, and provide students with the tools to achieve academic success.</p>
+            </div>
+            <div class="about-card">
+                <h2>Why Choose Us?</h2>
+                <ul>
+                    <li>Seamless faculty and course management</li>
+                    <li>User-friendly interfaces for students and staff</li>
+                    <li>Accurate and efficient reporting systems</li>
+                    <li>Cutting-edge technologies to enhance education</li>
+                </ul>
+            </div>
+            <div class="about-card">
+                <h2>Our Features</h2>
+                <p>From student registration to faculty performance analysis, our system covers it all. Integrated modules ensure smooth operation of academic activities.</p>
+            </div>
+        </div>
+    </div>
+</section>

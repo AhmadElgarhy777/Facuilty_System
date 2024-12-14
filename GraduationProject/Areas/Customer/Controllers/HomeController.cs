@@ -29,11 +29,11 @@ namespace GraduationProject.Areas.Customer.Controllers
              return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
            return View();
         }
-        public IActionResult About_Faculty()
+        public IActionResult Contact()
         {
 
              return View( );

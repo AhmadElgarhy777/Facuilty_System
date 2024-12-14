@@ -14,6 +14,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
     public class RegisterationController : Controller
     {
+        private readonly IMemberPhoneRepository memberPhoneRepository;
         private readonly IStudentPhoneRepository studentPhoneRepository;
         private readonly IStudentRepository studentRepository;
         private readonly IMemberRepository memberRepository;
@@ -23,8 +24,9 @@ namespace GraduationProject.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<IdentityUser> signinmanager;
 
-        public RegisterationController(IStudentPhoneRepository studentPhoneRepository,IStudentRepository studentRepository,IMemberRepository memberRepository,IEmployeeRepository employeeRepository ,IDepartmentRepository departmentRepository, UserManager<IdentityUser> usermanger, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signinmanager)
+        public RegisterationController(IMemberPhoneRepository memberPhoneRepository,IStudentPhoneRepository studentPhoneRepository,IStudentRepository studentRepository,IMemberRepository memberRepository,IEmployeeRepository employeeRepository ,IDepartmentRepository departmentRepository, UserManager<IdentityUser> usermanger, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signinmanager)
         {
+            this.memberPhoneRepository = memberPhoneRepository;
             this.studentPhoneRepository = studentPhoneRepository;
             this.studentRepository = studentRepository;
             this.memberRepository = memberRepository;
@@ -83,8 +85,6 @@ namespace GraduationProject.Areas.Admin.Controllers
             ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
             var department = departmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
             ViewBag.department = department;
-
-
             return View();
         }
         [HttpPost]
@@ -137,18 +137,18 @@ namespace GraduationProject.Areas.Admin.Controllers
                         DepartmentId = student.DepartmentId
 
                     };
-                    //if (student.studentPhones != null && student.studentPhones.Any())
-                    //{
-                    //    var studentPhones = student.studentPhones
-                    //        .Where(p => !string.IsNullOrWhiteSpace(p))
-                    //        .Select(p => new StudentPhone { StudentId = applicationUser.Id, Phone = p })
-                    //    .ToList();
-
-                    //    studentPhoneRepository.AddRange(studentPhones);
-                    //    studentPhoneRepository.Commit();
-                    //}
                     studentRepository.Add(studentinstance);
                     studentRepository.Commit();
+                    if (student.studentPhones != null && student.studentPhones.Any())
+                    {
+                        var studentPhones = student.studentPhones
+                            .Where(p => !string.IsNullOrWhiteSpace(p))
+                            .Select(p => new StudentPhone { StudentId = applicationUser.Id, Phone = p })
+                        .ToList();
+
+                        studentPhoneRepository.AddRange(studentPhones);
+                        studentPhoneRepository.Commit();
+                    }
                     TempData["message"] = $"The Student is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
                     ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
@@ -174,7 +174,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
             var department = departmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
-            ViewBag.department = department;
+            ViewBag.department = department; 
 
 
             return View();
@@ -233,6 +233,16 @@ namespace GraduationProject.Areas.Admin.Controllers
                     };
                     memberRepository.Add(ProfMemberInstance);
                     memberRepository.Commit();
+                    if (member.MemberPhones != null && member.MemberPhones.Any())
+                    {
+                        var memberPhones = member.MemberPhones
+                            .Where(p => !string.IsNullOrWhiteSpace(p))
+                            .Select(p => new MemberPhone { MemberId = applicationUser.Id, Phone = p })
+                        .ToList();
+
+                        memberPhoneRepository.AddRange(memberPhones);
+                        memberPhoneRepository.Commit();
+                    }
                     TempData["message"] = $"The Professor is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
                     ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
@@ -317,6 +327,16 @@ namespace GraduationProject.Areas.Admin.Controllers
                     };
                     memberRepository.Add(ProfMemberInstance);
                     memberRepository.Commit();
+                    if (member.MemberPhones != null && member.MemberPhones.Any())
+                    {
+                        var memberPhones = member.MemberPhones
+                            .Where(p => !string.IsNullOrWhiteSpace(p))
+                            .Select(p => new MemberPhone { MemberId = applicationUser.Id, Phone = p })
+                        .ToList();
+
+                        memberPhoneRepository.AddRange(memberPhones);
+                        memberPhoneRepository.Commit();
+                    }
                     TempData["message"] = $"The Assistant is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
                     ViewBag.department = ViewBag.department = departmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });

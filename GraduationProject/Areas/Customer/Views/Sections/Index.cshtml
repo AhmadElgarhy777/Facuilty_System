@@ -1,0 +1,97 @@
+﻿@model List<Sections>
+
+
+<div class="row mb-3">
+    <div class="col-9">
+        <h1 style="font-size: 2.5em; font-weight: bold;">Sections</h1>
+    </div>
+    <div class="col-3">
+        <a asp-action="Create" asp-controller="Sections" asp-area="Customer" class="btn btn-danger">Create New Sections</a>
+    </div>
+</div>
+
+
+<div class="row">
+    <form asp-action="Index">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input type="text" placeholder="Search by Name..." class="form-control" name="search">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-warning">@ViewBag.ErrorMessage</div>
+    }
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 15%;" scope="col">Name</th>
+                <th style="width: 10%;" scope="col">Document Url</th>
+                <th style="width: 10%;" scope="col">Course</th>
+                <th style="width: 15%;" scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-light">
+                    <td>@item.Name</td>
+                    <td><a href="~/SectionDocument/@item.SecURL" target="_blank">Document</a></td>
+                    <td>@item.Course.Name</td>
+                    <td>
+                        <a asp-action="Delete" class="btn btn-dark btn-delete" asp-route-id="@item.SectionsId" style="margin-left: 10px;">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteButtons = document.querySelectorAll('.btn-delete');
+        var deleteForm = document.getElementById('deleteForm');
+        var courseIdInput = document.getElementById('deleteCoursetId');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var courseId = this.getAttribute('data-id');
+                courseIdInput.value = courseId;
+                deleteForm.action = '/Admin/Course/Delete';
+            });
+        });
+    });
+</script>
+
+@*  pagination *@
+
+
+@{
+    var count = Model.Count;
+}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", "Course", new { page = ViewBag.CurrentPage - 1 })">Previous</a>
+        </li>
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", "Course", new { page = i })">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", "Course", new { page = ViewBag.CurrentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</nav>

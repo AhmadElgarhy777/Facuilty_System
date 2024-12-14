@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace Models
         public int SectionsId { get; set; }
         [Required]
         public string Name { get; set; } = null!;
-        [Required]
+        [ValidateNever]
+
         public string SecURL { get; set; } = null!;
         public int CourseId { get; set; }
         //public EnumLevel CourseLevel { get; set; }
