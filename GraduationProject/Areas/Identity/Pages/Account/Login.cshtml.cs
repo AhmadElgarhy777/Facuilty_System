@@ -128,6 +128,13 @@ namespace GraduationProject.Areas.Identity.Pages.Account
                         return RedirectToAction(nameof(Index), "EmpolyeeDetailes", new { area = "Customer", EmpID });
 
                     }
+                    
+                    else if (roles.Contains(SD.Asseitant))
+                    {
+                        var AssID = user.Id;
+                        return RedirectToAction(nameof(Index), "Assistant", new { area = "Customer", AssID });
+
+                    }
 
 
                 }

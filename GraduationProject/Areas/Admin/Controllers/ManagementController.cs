@@ -128,6 +128,11 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var result= await userManager.DeleteAsync(newUser);
             if (result.Succeeded)
             {
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", student.ImgUrl);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
                 studentRepository.Delete(student);
                 studentRepository.Commit();
                 TempData["success"] = "Delete student successfuly";
@@ -237,6 +242,11 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var result = await userManager.DeleteAsync(newUser);
             if (result.Succeeded)
             {
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", member.ImgUrl);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
                 memberRepository.Delete(member);
                 memberRepository.Commit();
                 TempData["success"] = "Delete Professor successfuly";
@@ -350,6 +360,11 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var result = await userManager.DeleteAsync(newUser);
             if (result.Succeeded)
             {
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", member.ImgUrl);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
                 memberRepository.Delete(member);
                 memberRepository.Commit();
                 TempData["success"] = "Delete Assistant successfuly";
@@ -464,6 +479,11 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var result = await userManager.DeleteAsync(newUser);
             if (result.Succeeded)
             {
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", employee.ImgUrl);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
                 employeeRepository.Delete(employee);
                 employeeRepository.Commit();
                 TempData["success"] = "Delete Employee successfuly";
