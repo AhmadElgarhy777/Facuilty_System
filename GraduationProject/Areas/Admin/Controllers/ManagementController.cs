@@ -58,69 +58,6 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
 
             return View(students.ToList());
         }
-        //Edit Student
-        public IActionResult Edit(string Studentid)
-        {
-            ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
-            ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
-            ViewBag.department = departmentRepository.GetAll().ToList();
-
-            var students = studentRepository.GetOne([e => e.Department], e => e.StudentId == Studentid).FirstOrDefault();
-            return View(students);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit(Student student, IFormFile ImgUrl)
-        {
-            var oldproduct = studentRepository.GetOne([], e => e.StudentId == student.StudentId, false).FirstOrDefault();
-
-            if (oldproduct == null)
-            {
-                return RedirectToAction("");
-            }
-           
-
-                if (ImgUrl != null && ImgUrl.Length > 0)
-                {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", fileName);
-                    var oldfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", oldproduct.ImgUrl);
-
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        ImgUrl.CopyTo(stream);
-                    }
-                    if (System.IO.File.Exists(oldfilePath))
-                    {
-                        System.IO.File.Delete(oldfilePath);
-                    }
-                    student.ImgUrl = fileName;
-                }
-                else
-                {
-                    student.ImgUrl = oldproduct.ImgUrl;
-                }
-
-                var newUser = await userManager.FindByIdAsync(student.StudentId);
-                newUser.Email = student.Email;
-            newUser.UserName = student.FName + "_" + student.MName + "_" + student.LName;
-               
-                //newUser.Address = student.Address;
-                var result = await userManager.UpdateAsync(newUser);
-                if (result.Succeeded)
-                {
-                    studentRepository.Edit(student);
-                    studentRepository.Commit();
-                    TempData["success"] = "Edited student successfuly";
-
-                    return RedirectToAction("Index", "Management", new { area = "Admin" });
-                }
-               
-                    TempData["error"] = "the student Email are required";
-                
-                return View(student);
-                
-            
-        }
         public async Task<IActionResult> Delete(string id)
         {
             var student = studentRepository.GetAll().FirstOrDefault(e => e.StudentId == id);
@@ -139,7 +76,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }else
 
-                TempData["error"] = "the student Email are required";
+                TempData["error"] = "somthing is wrong... please go to the IT engineer for more detailes";
             return RedirectToAction("Index");
         }
 
@@ -174,67 +111,10 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             return View(Professors.ToList());
 
         }
-        public IActionResult Edit_Professor(string Memberid)
-        {
-            ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
-            ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
-            ViewBag.department = departmentRepository.GetAll().ToList();
-
-            var members = memberRepository.GetOne([e => e.Department], e => e.MemberId == Memberid).FirstOrDefault();
-            return View(members);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit_Professor(Member member, IFormFile ImgUrl)
-        {
-            var oldproduct = memberRepository.GetOne([], e => e.MemberId == member.MemberId, false).FirstOrDefault();
-
-            if (oldproduct == null)
-            {
-                return RedirectToAction("Index_Professor");
-            }
-           
-                if (ImgUrl != null && ImgUrl.Length > 0)
-                {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", fileName);
-                    var oldfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", oldproduct.ImgUrl);
-
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        ImgUrl.CopyTo(stream);
-                    }
-                    if (System.IO.File.Exists(oldfilePath))
-                    {
-                        System.IO.File.Delete(oldfilePath);
-                    }
-                    member.ImgUrl = fileName;
-                }
-                else
-                {
-                    member.ImgUrl = oldproduct.ImgUrl;
-                }
-                var newUser = await userManager.FindByIdAsync(member.MemberId);
-                newUser.Email = member.Email;
-            newUser.UserName = member.FName + "_" + member.MName + "_" + member.LName;
-              
-            //newUser.Address = member.Address;
-                var result = await userManager.UpdateAsync(newUser);
-                if (result.Succeeded)
-                {
-
-                    memberRepository.Edit(member);
-                    memberRepository.Commit();
-                    TempData["success"] = "Edited Professor successfuly";
-                    return RedirectToAction("Index_Professor", "Management", new { area = "Admin" });
-                }
-              
-                    TempData["error"] = "the student Email are required";
-
-            return RedirectToAction("Edit_Professor", "Management", new { area = "Admin" });
+       
 
 
-
-        }
+        
         public async Task<IActionResult> Delete_Professor(string id)
         {
             var member = memberRepository.GetAll().FirstOrDefault(e => e.MemberId == id);
@@ -254,7 +134,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             }
             else
 
-                TempData["error"] = "the Professor Email are Reruired";
+                TempData["error"] = "somthing is wrong... please go to the IT engineer for more detailes";
             return RedirectToAction("Index_Professor");
         }
 
@@ -295,64 +175,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             return View(Assistants.ToList());
 
         }
-        public IActionResult Edit_Assistant(string Memberid)
-        {
-            ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
-            ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
-            ViewBag.department = departmentRepository.GetAll().ToList();
-
-            var members = memberRepository.GetOne([e => e.Department], e => e.MemberId == Memberid).FirstOrDefault();
-            return View(members);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit_Assistant(Member member, IFormFile ImgUrl)
-        {
-            var oldproduct = memberRepository.GetOne([], e => e.MemberId == member.MemberId, false).FirstOrDefault();
-
-            if (oldproduct == null)
-            {
-                return RedirectToAction("Index_Assistant");
-            }
-
-            if (ImgUrl != null && ImgUrl.Length > 0)
-            {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", fileName);
-                var oldfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", oldproduct.ImgUrl);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    ImgUrl.CopyTo(stream);
-                }
-                if (System.IO.File.Exists(oldfilePath))
-                {
-                    System.IO.File.Delete(oldfilePath);
-                }
-                member.ImgUrl = fileName;
-            }
-            else
-            {
-                member.ImgUrl = oldproduct.ImgUrl;
-            }
-            var newUser = await userManager.FindByIdAsync(member.MemberId);
-            newUser.Email = member.Email;
-            newUser.UserName = member.FName + "_" + member.MName + "_" + member.LName;
-         
-            //newUser.Address = member.Address;
-            var result = await userManager.UpdateAsync(newUser);
-            if (result.Succeeded)
-            {
-                memberRepository.Edit(member);
-                memberRepository.Commit();
-                TempData["success"] = "Edited Assistant successfuly";
-                return RedirectToAction("Index_Assistant", "Management", new { area = "Admin" });
-            }
-            TempData["error"] = "the student Email are required";
-
-            return RedirectToAction("Edit_Professor", "Management", new { area = "Admin" });
-
-
-        }
+      
         public async Task<IActionResult> Delete_Assistant(string id)
         {
             var member = memberRepository.GetAll().FirstOrDefault(e => e.MemberId == id);
@@ -372,7 +195,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             }
             else
 
-                TempData["error"] = "the Assistant Email are Reruired";
+                TempData["error"] = "somthing is wrong... please go to the IT engineer for more detailes";
             return RedirectToAction("Index_Assistant");
 
         }
@@ -415,63 +238,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             return View(employees.ToList());
 
         }
-        public IActionResult Edit_Empolyee(string Employeeid) 
-        {
-            ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
-            ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
-            ViewBag.department = departmentRepository.GetAll().ToList();
-
-            var members = employeeRepository.GetOne([], e => e.EmployeeId == Employeeid).FirstOrDefault();
-            return View(members);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit_Empolyee(Employee employee, IFormFile ImgUrl)
-        {
-            var oldproduct = employeeRepository.GetOne([], e => e.EmployeeId == employee.EmployeeId, false).FirstOrDefault();
-
-            if (oldproduct == null)
-            {
-                return RedirectToAction("Index_Empolyee");
-            }
-
-            if (ImgUrl != null && ImgUrl.Length > 0)
-            {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", fileName);
-                var oldfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", oldproduct.ImgUrl);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    ImgUrl.CopyTo(stream);
-                }
-                if (System.IO.File.Exists(oldfilePath))
-                {
-                    System.IO.File.Delete(oldfilePath);
-                }
-                employee.ImgUrl = fileName;
-            }
-            else
-            {
-                employee.ImgUrl = oldproduct.ImgUrl;
-            }
-            var newUser = await userManager.FindByIdAsync(employee.EmployeeId);
-            newUser.Email = employee.Email;
-            newUser.UserName = employee.FName + "_" + employee.MName + "_" + employee.LName;
-          
-            //newUser.Address = member.Address;
-            var result = await userManager.UpdateAsync(newUser);
-            if (result.Succeeded)
-            {
-                employeeRepository.Edit(employee);
-                employeeRepository.Commit();
-                TempData["success"] = "Edited Employee successfuly";
-                return RedirectToAction("Index_Empolyee", "Management", new { area = "Admin" });
-            }
-            TempData["error"] = "the student Email are required";
-
-            return RedirectToAction("Edit_Empolyee", "Management", new { area = "Admin" });
-
-        }
+      
         public async Task<IActionResult> Delete_Empolyee(string id)
         {
             var employee = employeeRepository.GetAll().FirstOrDefault(e => e.EmployeeId == id);
@@ -489,7 +256,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                 TempData["success"] = "Delete Employee successfuly";
                 return RedirectToAction("Index_Empolyee");
             }
-            TempData["error"] = "the Empolyee Email are Reruired";
+            TempData["error"] = "somthing is wrong... please go to the IT engineer for more detailes";
             return RedirectToAction("Index_Empolyee");
 
         }

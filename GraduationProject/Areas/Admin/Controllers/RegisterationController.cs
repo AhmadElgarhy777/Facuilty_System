@@ -69,11 +69,11 @@ namespace GraduationProject.Areas.Admin.Controllers
                 if (result.Succeeded)
                 {
                     await usermanger.AddToRoleAsync(applicationUser, SD.AdminRole);
-                    TempData["message"] = $"The admin is added sucsesufuly ";
+                    TempData["message"] = "The admin is added sucsesufuly ";
                     return View();
                 }
                 else
-                    ModelState.AddModelError("Password", "error-your pasword must confirm the ideal...");
+                    ModelState.AddModelError("Email", "Dublicated Email....");
 
             }
             return View(admin);
@@ -149,7 +149,7 @@ namespace GraduationProject.Areas.Admin.Controllers
                         studentPhoneRepository.AddRange(studentPhones);
                         studentPhoneRepository.Commit();
                     }
-                    TempData["message"] = $"The Student is added sucsesufuly ";
+                    TempData["message"] = "The Student is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
                     ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
                     
@@ -243,7 +243,7 @@ namespace GraduationProject.Areas.Admin.Controllers
                         memberPhoneRepository.AddRange(memberPhones);
                         memberPhoneRepository.Commit();
                     }
-                    TempData["message"] = $"The Professor is added sucsesufuly ";
+                    TempData["message"] = "The Professor is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
                     ViewBag.EnumLevel = (EnumLevel[])Enum.GetValues(typeof(EnumLevel));
                     ViewBag.department = ViewBag.department = departmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
@@ -337,7 +337,7 @@ namespace GraduationProject.Areas.Admin.Controllers
                         memberPhoneRepository.AddRange(memberPhones);
                         memberPhoneRepository.Commit();
                     }
-                    TempData["message"] = $"The Assistant is added sucsesufuly ";
+                    TempData["message"] = "The Assistant is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
                     ViewBag.department = ViewBag.department = departmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
 
@@ -415,7 +415,7 @@ namespace GraduationProject.Areas.Admin.Controllers
                     };
                     employeeRepository.Add(EmpInstance);
                     employeeRepository.Commit();
-                    TempData["message"] = $"The Empolyee is added sucsesufuly ";
+                    TempData["message"] = "The Empolyee is added sucsesufuly ";
                     ViewBag.EnumGender = (EnumGender[])Enum.GetValues(typeof(EnumGender));
 
                     return View();

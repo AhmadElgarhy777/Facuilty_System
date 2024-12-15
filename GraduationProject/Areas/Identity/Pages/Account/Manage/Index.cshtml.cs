@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
+using Utility;
 
 namespace GraduationProject.Areas.Identity.Pages.Account.Manage
 {
@@ -75,7 +76,13 @@ namespace GraduationProject.Areas.Identity.Pages.Account.Manage
             var member = memberRepository.GetOne(expression: e => e.MemberId == user.Id).FirstOrDefault();
             var student = studentRepository.GetOne(expression: e => e.StudentId == user.Id).FirstOrDefault();
             var empolyee = employeeRepository.GetOne(expression: e => e.EmployeeId == user.Id).FirstOrDefault();
-
+            ApplicationUser Admin = new ApplicationUser()
+            {
+                Id = user.Id,
+                RoleName = SD.AdminRole,
+                Email = user.Email
+            };
+           
             if (member != null)
             {
             FullName = $"{member.FName} {member.MName} {member.LName}";
@@ -94,13 +101,16 @@ namespace GraduationProject.Areas.Identity.Pages.Account.Manage
           
 
             }
-            if (empolyee != null)
+            else if (empolyee != null)
             {
             FullName = $"{empolyee.FName} {empolyee.MName} {empolyee.LName}";
             Email = empolyee.Email;
             ProfileImg = empolyee.ImgUrl;
-
-           
+            }
+            else if (Admin != null)
+            {
+                FullName = "Admin";
+                Email = Admin.Email;
 
             }
         }

@@ -85,6 +85,7 @@ namespace GraduationProject.Areas.Customer.Controllers
                 }
                 _sectionsRepository.Add(sections);
                 _sectionsRepository.Commit();
+                TempData["message"] = "The section is created sucesfully";
                 return RedirectToAction(nameof(Index));
             }
             var Course = _courseRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.CourseId.ToString() });
@@ -102,6 +103,7 @@ namespace GraduationProject.Areas.Customer.Controllers
             }
             _sectionsRepository.Delete(sections);
             _sectionsRepository.Commit();
+            TempData["message"] = "The section is deleted sucesfully";
             return RedirectToAction(nameof(Index));
         }
     }

@@ -129,12 +129,25 @@ namespace GraduationProject.Areas.Identity.Pages.Account
 
                     }
 
+                    else if (roles.Contains(SD.Asseitant))
+                    {
+                        var AssID = user.Id;
+                        return RedirectToAction(nameof(Index), "Assistant", new { area = "Customer", AssID });
+
+                    }
                     else if (roles.Contains(SD.Student))
                     {
                         var StudentID = user.Id;
-                        return RedirectToAction(nameof(Index), nameof(StudentDetailes), new { area = "Customer", StudentID });
+                        return RedirectToAction(nameof(Index), "StudentDetailes", new { area = "Customer", StudentID });
 
                     }
+                     else if (roles.Contains(SD.AdminRole))
+                    {
+                        return RedirectToPage("/Account/Manage/Index", new {area="Identity" });
+
+
+                    }
+
 
 
                 }

@@ -1,0 +1,70 @@
+﻿:root {
+    --primary: #2878EB;
+    --dark: #120F2D;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: #6B6A75;
+    background-color: #FFFFFF;
+}
+
+.main-content {
+    margin-bottom: 100px;
+    padding: 20px;
+}
+/* Hero Section */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 77vh; /* Adjust as needed */
+    background-image: url('~/Img/WorkImg/Cover.png');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(40, 120, 235, 0.7); /* Blue overlay with transparency */
+        z-index: 1;
+    }
+
+    .hero-section .hero-content {
+        position: relative;
+        z-index: 2;
+        color: #ffffff;
+        text-align: center;
+        padding-top: 20vh; /* Centers text vertically */
+    }
+
+    .hero-section h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+    }
+
+    .hero-section p {
+        font-size: 1.5rem;
+    }
+
+.fa-envelope {
+    font-size: 15px;
+}
+
+.fa-book-reader {
+    font-size: 30px;
+}
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: var(--dark);
+    color: #fff;
+    margin-top: 50px;
+}

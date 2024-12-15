@@ -5,23 +5,8 @@
 @section Scripts {
 
     <partial name="_TempDataPartial.cshtml">
-        <partial name="_ValidationScriptsPartial.cshtml">
 }
-    @if (@TempData["success"] != null)
-    {
-        <script>
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "timeOut": "3000",
-            };
-
-            toastr.success('@TempData["success"]');
-        </script>
-    }
-}
-
+  
 
 <div class="row mb-3">
     <div class="col-9">
@@ -63,9 +48,6 @@
                     <td>@item.SSN</td>
                     <td>@item.Department.Name</td>
                     <td>
-                        <a href="/Admin/Management/Edit_Professor?Memberid=@item.MemberId" class="btn btn-dark">
-                            <i class="bi bi-pencil-square"></i> Edit
-                        </a>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@item.MemberId">
                             <i class="bi bi-trash3-fill"></i>Delete
                         </button>

@@ -8,7 +8,7 @@ namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
 
-    public class StudentDetailes : Controller
+    public class StudentDetailesController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly IMemberRepository memberRepository;
@@ -16,7 +16,7 @@ namespace GraduationProject.Areas.Customer.Controllers
         private readonly ITimetableRepository timetableRepository;
         private readonly ILectureRepository lectureRepository;
 
-        public StudentDetailes(UserManager<IdentityUser> userManager, IStudentRepository studentRepository, IMemberRepository memberRepository , ITimetableRepository timetableRepository , ILectureRepository lectureRepository)
+        public StudentDetailesController(UserManager<IdentityUser> userManager, IStudentRepository studentRepository, IMemberRepository memberRepository , ITimetableRepository timetableRepository , ILectureRepository lectureRepository)
         {
             this.userManager = userManager;
             this.studentRepository = studentRepository;
