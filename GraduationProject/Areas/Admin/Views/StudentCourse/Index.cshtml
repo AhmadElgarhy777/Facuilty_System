@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Student Courses";
+}
+
+
+@model List<StudentCourse>
+
+
+<div class="row mb-3">
+    <div class="col-9">
+        <h1 style="font-size: 2.5em; font-weight: bold;">Student Courses</h1>
+    </div>
+</div>
+
+  <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 10%;" scope="col">Name</th>
+                <th style="width: 5%;" scope="col">Hours</th>
+                <th style="width: 5%;" scope="col">Degree</th>
+                <th style="width: 10%;" scope="col">Document</th>
+                <th style="width: 10%;" scope="col">Course Level</th>
+                <th style="width: 15%;" scope="col">Member Name</th>
+                <th style="width: 40%;" scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-light">
+                    <td>@item.Course.Name</td>
+                    <td>@item.Course.Hours</td>
+                    <td>@item.Course.Degree</td>
+                    <td><a href="~/CourseDocument/@item.Course.DocumentUrl">Document</a></td>
+                    <td>@item.Course.CourseLevel</td>
+                <td>@item.Course.Member.FName @item.Course.Member.MName @item.Course.Member.LName</td>
+                    <td>
+                        <a href="" class="btn btn-dark" style="margin-left: 10px;">Degrees</a>
+                    <a href="" class="btn btn-dark" style="margin-left: 10px;">Lectures</a>
+                    <a href="" class="btn btn-dark" style="margin-left: 10px;">Sections</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

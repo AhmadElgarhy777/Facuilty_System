@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,20 @@ namespace Models
         public Student Student { get; set; }
         public Course Course { get; set; }
 
-        public int degree { get; set; }
+        [ValidateNever]
+        public int Degree { get; set; }
+        [ValidateNever]
+        public int StudentAttendancedegree { get; set; }
+        [ValidateNever]
+        public int StudentPracticalDegree { get; set; }
+        [ValidateNever]
+        public int StudentMidTermDegree { get; set; }
+        [ValidateNever]
+        public int StudentOralDegree { get; set; }
+        [ValidateNever]
+        public int StudentFinalDegree { get; set; }
+        [ValidateNever]
+        public char Grade { get; set; }
 
 
     }

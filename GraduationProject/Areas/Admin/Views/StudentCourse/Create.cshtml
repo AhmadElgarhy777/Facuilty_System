@@ -1,0 +1,24 @@
+﻿@model Course
+
+@{
+    ViewData["Title"] = "Add Student to " + @Model.Name;
+}
+
+<div class="row">
+    <div class="col-md-11">
+        <form action="/Admin/StudentCourse/Create" method="post">
+            <div class="form-group">
+                <label for="StudentSSN" class="control-label">Student SSN</label>
+                <input type="text" id="StudentSSN" name="StudentSSN" class="form-control" /> <br />
+            </div>
+            <input type="hidden" id="courseId" name="courseId" value="@Model.CourseId" />
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary btn-lg w-100" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a href="/Admin/Course/Index">Back to List</a>
+</div>

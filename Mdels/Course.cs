@@ -16,10 +16,10 @@ namespace Models
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
         [Required]
-        public int Hourse { get; set; }
-        [Required]
+        public int Hours { get; set; }
+        [ValidateNever]
         public int Degree { get; set; }
-        [Required]
+        [ValidateNever]
         public string DocumentUrl { get; set; } = null!;
         [Required]
         public EnumLevel CourseLevel { get; set; }
@@ -39,8 +39,18 @@ namespace Models
         [ValidateNever]
         public Department Department { get; set; }
         public string MemberId { get; set; } 
-        public int DepartmentId { get; set; } 
+        public int DepartmentId { get; set; }
 
+        [Required]
+        public int AttendanceDegree { get; set; }
+        [Required]
+        public int PracticalDegree { get; set; }
+        [Required]
+        public int MidTermDegree { get; set; }
+        [Required]
+        public int OralDegree { get; set; }
+        [Required]
+        public int FinalDegree { get; set; }
 
 
     }

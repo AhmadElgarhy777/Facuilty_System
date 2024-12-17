@@ -18,14 +18,22 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
         public IActionResult Index(int page = 1, string search = null)
         {
              int pageSize = 5;
-            var totalProducts = DepartmentRepository.GetAll([]).Count();
-            ;
-            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            var totalDepartments = DepartmentRepository.GetAll([]).Count();
+            
+            //var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalDepartments / pageSize));
 
             if (page <= 0) page = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Department> departments = DepartmentRepository.GetAll();
-            ;
+
+
+            IQueryable<Department> departments2 = DepartmentRepository.GetAll([e => e.Students, e => e.Courses]);
+            foreach ( var department in departments2)
+            {
+                department.NumOfCourses = department.Courses.Count();
+                department.NumOfStudent = department.Students.Count();
+            }
 
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
@@ -42,7 +50,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
                 }
             }
             departments = departments.Skip((page - 1) * pageSize).Take(pageSize);
-
+             
             return View(model: departments.ToList());
         }
 

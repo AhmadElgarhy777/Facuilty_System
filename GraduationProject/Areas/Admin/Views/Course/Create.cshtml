@@ -9,12 +9,8 @@
 <hr />
 <div class="row">
     <div class="col-md-11">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="CourseId" class="form-control" />
-                <span asp-validation-for="CourseId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -26,18 +22,38 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Hourse" class="control-label">Hours</label>
-                <input asp-for="Hourse" class="form-control" />
-                <span asp-validation-for="Hourse" class="text-danger"></span>
+                <label asp-for="Hours" class="control-label">Hours</label>
+                <input asp-for="Hours" class="form-control" />
+                <span asp-validation-for="Hours" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Degree" class="control-label"></label>
-                <input asp-for="Degree" class="form-control" />
-                <span asp-validation-for="Degree" class="text-danger"></span>
+                <label asp-for="AttendanceDegree" class="control-label">Attendance Degree</label>
+                <input asp-for="AttendanceDegree" class="form-control" />
+                <span asp-validation-for="AttendanceDegree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PracticalDegree" class="control-label">Practical Degree</label>
+                <input asp-for="PracticalDegree" class="form-control" />
+                <span asp-validation-for="PracticalDegree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MidTermDegree" class="control-label">MidTerm Degree</label>
+                <input asp-for="MidTermDegree" class="form-control" />
+                <span asp-validation-for="MidTermDegree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OralDegree" class="control-label">Oral Degree</label>
+                <input asp-for="OralDegree" class="form-control" />
+                <span asp-validation-for="OralDegree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinalDegree" class="control-label">Final Degree</label>
+                <input asp-for="FinalDegree" class="form-control" />
+                <span asp-validation-for="FinalDegree" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DocumentUrl" class="control-label"></label>
-                <input type="file" asp-for="DocumentUrl" class="form-control" />
+                <input type="file" accept=".pdf,application/pdf" asp-for="DocumentUrl" class="form-control" />
                 <span asp-validation-for="DocumentUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DepartmentId" class="control-label">Department</label>
-                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.departments"><option>Select Member</option></select>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.departments"><option>Select Department</option></select>
             </div> <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary btn-lg w-100" />

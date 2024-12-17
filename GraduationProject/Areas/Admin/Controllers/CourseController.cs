@@ -2,6 +2,7 @@
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace GraduationProject.Areas.Admin.Controllers
@@ -22,15 +23,16 @@ namespace GraduationProject.Areas.Admin.Controllers
             this.DepartmentRepository = DepartmentRepository;
 
             this.MemberRepository = memberRepository;
+
         }
         public IActionResult Index(int page = 1, string search = null)
         {
 
             int pageSize = 5;
-            var totalProducts = CourseRepository.GetAll([]).Count();
+            var totalCourses = CourseRepository.GetAll([]).Count();
             
             //var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
-            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalProducts / pageSize));
+            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalCourses / pageSize));
 
 
             if (page <= 0) page = 1;
@@ -70,18 +72,34 @@ namespace GraduationProject.Areas.Admin.Controllers
             return View(model: course);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Course course)
+        public IActionResult Create(Course course, IFormFile DocumentUrl)
         {
+            course.Degree = course.AttendanceDegree + course.PracticalDegree + course.FinalDegree + course.MidTermDegree + course.OralDegree;
+
             if (ModelState.IsValid)
             {
+                if (DocumentUrl.Length > 0) 
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(DocumentUrl.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", fileName);
 
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        DocumentUrl.CopyTo(stream);
+                    }
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        File(fileStream, "application/pdf");
+                    }
+                    //File(fileStream, "application/pdf", fileName);
+                    course.DocumentUrl = fileName;
+                }
                 CourseRepository.Add(course);
-
                 CourseRepository.Commit();
-
+               // TempData["message"] = "The lecture is added sucsesfully";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -90,14 +108,18 @@ namespace GraduationProject.Areas.Admin.Controllers
             ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + e.MName + e.LName, Value = e.MemberId.ToString() });
 
             return View(model: course);
-
         }
-
         public IActionResult Delete(int courseId)
         {
-            Course course = new Course() { CourseId = courseId };
+            var course = CourseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();
+            var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", course.DocumentUrl);
+            if (System.IO.File.Exists(oldFilePath))
+            {
+                System.IO.File.Delete(oldFilePath);
+            }
             CourseRepository.Delete(course);
             CourseRepository.Commit();
+            //TempData["message"] = "The lecture is deleted sucessfully";
             return RedirectToAction(nameof(Index));
         }
 
@@ -112,15 +134,47 @@ namespace GraduationProject.Areas.Admin.Controllers
             return View(course);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Course course)
+        public IActionResult Edit(Course course, IFormFile DocumentUrl)
         {
+            course.Degree = course.AttendanceDegree + course.PracticalDegree + course.FinalDegree + course.MidTermDegree + course.OralDegree;
             if (ModelState.IsValid)
             {
+                var oldcourse = CourseRepository.GetOne(expression: e => e.CourseId == course.CourseId , tracked: false).FirstOrDefault();
+
+                if (DocumentUrl != null && DocumentUrl.Length > 0) 
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(DocumentUrl.FileName); 
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", fileName);
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", oldcourse.DocumentUrl);
+
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        DocumentUrl.CopyTo(stream);
+                    }
+
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        File(fileStream, "application/pdf");
+                    }
+                    //File(fileStream, "application/pdf", fileName);
+                    course.DocumentUrl = fileName;
+                }
+
+                else
+                {
+                    course.DocumentUrl = oldcourse.DocumentUrl;
+                }
                 CourseRepository.Edit(course);
                 CourseRepository.Commit();
-
+                // TempData["message"] = "The lecture is added sucsesfully";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -128,8 +182,8 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + e.MName + e.LName, Value = e.MemberId.ToString() });
 
-            return View(course);
-
+            return View(model: course);
         }
+
     }
 }

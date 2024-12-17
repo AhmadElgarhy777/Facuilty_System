@@ -37,14 +37,14 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th style="width: 15%;" scope="col">Name</th>
-            <th style="width: 10%;" scope="col">Number Of Hours</th>
-            <th style="width: 10%;" scope="col">Degree</th>
-            <th style="width: 10%;" scope="col">Document Url</th>
+            <th style="width: 10%;" scope="col">Name</th>
+            <th style="width: 5%;" scope="col">Hours</th>
+            <th style="width: 5%;" scope="col">Degree</th>
+            <th style="width: 10%;" scope="col">Document</th>
             <th style="width: 10%;" scope="col">Course Level</th>
             <th style="width: 15%;" scope="col">Member Name</th>
-            <th style="width: 15%;" scope="col">Department</th>
-            <th style="width: 15%;" scope="col">Actions</th>
+            <th style="width: 5%;" scope="col">Department</th>
+            <th style="width: 40%;" scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -52,16 +52,18 @@
         {
             <tr class="table-light">
                 <td>@item.Name</td>
-                <td>@item.Hourse</td>
+                <td>@item.Hours</td>
                 <td>@item.Degree</td>
-                <td><a href="@item.DocumentUrl">Document</a></td>
-                <td>@item.CourseLevel</td>
+                <td><a href="~/CourseDocument/@item.DocumentUrl">Document</a></td>   
+                 <td>@item.CourseLevel</td>
                 <td>@item.Member.FName @item.Member.MName @item.Member.LName</td>
                 <td>@item.Department.Name</td>
 
                 <td>
-                    <a href="/Admin/Course/Edit?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Edit</a>
+                     <a href="/Admin/Course/Edit?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Edit</a>
                      <a href="#" class="btn btn-dark btn-delete" data-id="@item.CourseId" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                     <a href="/Admin/StudentCourse/Create?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Add Student</a>
+                        <a href="/Admin/StudentCourse/Delete?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Delete Student</a>
                 </td>
             </tr>
         }
@@ -95,7 +97,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         var deleteButtons = document.querySelectorAll('.btn-delete');
         var deleteForm = document.getElementById('deleteForm');
-        var courseIdInput = document.getElementById('deleteCoursetId');
+        var courseIdInput = document.getElementById('deleteCourseId');
 
         deleteButtons.forEach(function (button) {
             button.addEventListener('click', function () {
