@@ -26,6 +26,7 @@ namespace GraduationProject.Areas.Admin.Controllers
         }
         public IActionResult Create(string day)
         {
+
             ViewBag.day = day; 
              ViewBag.sections = sectionRepository.GetAll()
                 .ToList();

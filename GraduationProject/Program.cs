@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
 using Models;
+using Utility;
 
 namespace GraduationProject
 {
@@ -58,6 +59,8 @@ namespace GraduationProject
                      options.Lockout.AllowedForNewUsers = false;
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            builder.Services.AddScoped<EmailService>();
+
 
             var app = builder.Build();
 

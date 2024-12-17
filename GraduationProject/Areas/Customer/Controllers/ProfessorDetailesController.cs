@@ -17,7 +17,7 @@ namespace GraduationProject.Areas.Customer.Controllers
         public IActionResult Index(string ProfID)
         {
             //var professor=await userManager.FindByIdAsync(ProfID);
-           var professor=memberRepository.GetOne(expression:e => e.MemberId == ProfID, includeProp: [e => e.Department]).FirstOrDefault();
+           var professor=memberRepository.GetOne(expression:e => e.MemberId == ProfID, includeProp: [e => e.Department,c=>c.MemberPhones]).FirstOrDefault();
 
             ViewBag.age = DateTime.Today.Year - professor.BirthDate.Year;
             return View(professor);

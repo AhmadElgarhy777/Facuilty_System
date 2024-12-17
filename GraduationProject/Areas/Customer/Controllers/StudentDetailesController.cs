@@ -32,7 +32,7 @@ namespace GraduationProject.Areas.Customer.Controllers
             ViewBag.Lectures = lectureRepository.GetAll()
                                        .ToList();
 
-             var student = studentRepository.GetOne([e => e.Department], e => e.StudentId == StudentID).FirstOrDefault();
+             var student = studentRepository.GetOne([e => e.Department,c=>c.StudentPhones], e => e.StudentId == StudentID).FirstOrDefault();
             ViewBag.professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1);
            ViewBag.timetable = timetableRepository.GetAll([e=>e.Lecture , e=>e.Section] ).ToList();
             return View(student);

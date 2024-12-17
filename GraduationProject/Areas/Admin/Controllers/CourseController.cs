@@ -30,7 +30,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             int pageSize = 5;
             var totalCourses = CourseRepository.GetAll([]).Count();
-            
+
             //var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
             var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalCourses / pageSize));
 
@@ -38,7 +38,7 @@ namespace GraduationProject.Areas.Admin.Controllers
             if (page <= 0) page = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Course> courses = CourseRepository.GetAll([e => e.Department, e => e.Member]);
-            
+
 
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
@@ -66,7 +66,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.departments = DepartmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
 
-            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName +" "+ e.MName + " " + e.LName, Value = e.MemberId.ToString() });
+            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + " " + e.MName + " " + e.LName, Value = e.MemberId.ToString() });
 
 
             return View(model: course);
@@ -80,7 +80,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                if (DocumentUrl.Length > 0) 
+                if (DocumentUrl.Length > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(DocumentUrl.FileName);
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", fileName);
@@ -99,7 +99,7 @@ namespace GraduationProject.Areas.Admin.Controllers
                 }
                 CourseRepository.Add(course);
                 CourseRepository.Commit();
-               // TempData["message"] = "The lecture is added sucsesfully";
+                // TempData["message"] = "The lecture is added sucsesfully";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -142,11 +142,11 @@ namespace GraduationProject.Areas.Admin.Controllers
             course.Degree = course.AttendanceDegree + course.PracticalDegree + course.FinalDegree + course.MidTermDegree + course.OralDegree;
             if (ModelState.IsValid)
             {
-                var oldcourse = CourseRepository.GetOne(expression: e => e.CourseId == course.CourseId , tracked: false).FirstOrDefault();
+                var oldcourse = CourseRepository.GetOne(expression: e => e.CourseId == course.CourseId, tracked: false).FirstOrDefault();
 
-                if (DocumentUrl != null && DocumentUrl.Length > 0) 
+                if (DocumentUrl != null && DocumentUrl.Length > 0)
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(DocumentUrl.FileName); 
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(DocumentUrl.FileName);
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", fileName);
                     var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CourseDocument", oldcourse.DocumentUrl);
 

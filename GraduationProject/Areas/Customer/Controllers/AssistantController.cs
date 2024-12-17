@@ -18,7 +18,7 @@ namespace GraduationProject.Areas.Customer.Controllers
 
         public IActionResult Index(string AssID)
         {
-            var Assistant = memberRepository.GetOne(expression: e => e.MemberId == AssID, includeProp: [e => e.Department]).FirstOrDefault();
+            var Assistant = memberRepository.GetOne(expression: e => e.MemberId == AssID, includeProp: [e => e.Department,c=>c.MemberPhones]).FirstOrDefault();
 
             ViewBag.age = DateTime.Today.Year - Assistant.BirthDate.Year;
             return View(Assistant);

@@ -52,7 +52,7 @@ namespace DataAccess.Repository
             dbSet.Add(entity);
             
         }
-        public void AddRange(List<T> entity)
+        public void AddRange(IEnumerable<T> entity)
         {
             dbSet.AddRange(entity);
             

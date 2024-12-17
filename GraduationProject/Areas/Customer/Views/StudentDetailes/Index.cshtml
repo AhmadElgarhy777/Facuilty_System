@@ -88,7 +88,29 @@
                     </div>
                 </div>
             </div>
+        <div class="col-md-12">
+            <div class="card card-custom card-success">
+                <div class="card-body">
+                    <h5 class="card-title">Phone Numbers</h5>
+                    <ul>
+                        @if (Model.StudentPhones != null && Model.StudentPhones.Count > 0)
+                        {
+                            @foreach (var phone in Model.StudentPhones)
+                            {
+                                <li>@phone.Phone</li>
+                            }
+                        }
+                        else
+                        {
+                            <p>No phone numbers available.</p>
+                        }
+                    </ul>
+                    <i class="fa fa-phone fa-3x float-end"></i>
+                </div>
+            </div>
         </div>
+
+    </div>
 
         <!-- Schedule Table -->
         <div class="row mt-5">
