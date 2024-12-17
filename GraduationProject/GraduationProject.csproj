@@ -42,6 +42,7 @@
 	  <Folder Include="wwwroot\lib\jquery\" />
 	  <Folder Include="wwwroot\lib\jquery\dist\" />
 	  <Folder Include="wwwroot\LectureDocument\" />
+	  <Folder Include="wwwroot\CourseDocument\" />
 	  <Folder Include="wwwroot\SectionDocument\" />
 	</ItemGroup>
 
