@@ -2,6 +2,7 @@
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Models;
 using Models.ViewModels;
 using System.Linq.Expressions;
@@ -28,7 +29,6 @@ namespace GraduationProject.Areas.Admin.Controllers
         {
              var studentcourse = StudentCourseRepository.GetAll(includeProp :[e => e.Course , e => e.Student , e => e.Course.Member], expression: e => e.StudentId == studentId).ToList();
 
-            //var studentcourse = StudentCourseRepository.GetAll(includeProp: new Expression<Func<StudentCourse, object>>[] { e => e.Course, e => e.Course.Member, e => e.Student }, expression: e => e.StudentId == studentId).ToList();
             return View(model : studentcourse);
         }
 
@@ -84,6 +84,13 @@ namespace GraduationProject.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Resultpage2()
+        {
+            string message = TempData["Message"] as string;
+            ViewBag.Message = message;
+            return View();
+        }
+
         public IActionResult Delete(int courseId)
         {
             var course = CourseRepository.GetAll(expression: e => e.CourseId == courseId).FirstOrDefault();
@@ -127,6 +134,67 @@ namespace GraduationProject.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(Resultpage));
+        }
+
+        public IActionResult Degrees(string studentId , int courseId)
+        {
+            var studentcourse = StudentCourseRepository.GetAll(includeProp: [e => e.Course] , expression: e => e.StudentId == studentId);
+
+            var studentcourse2 = studentcourse.Where(e => e.CourseId == courseId).FirstOrDefault();
+
+            return View(model: studentcourse2);
+        }
+
+        public IActionResult AddDegrees(string studentId, int courseId)
+        {
+            var studentcourse = StudentCourseRepository.GetAll( includeProp: [e => e.Course , e => e.Student] ,expression: e => e.StudentId == studentId);
+
+            var studentcourse2 = studentcourse.Where(e => e.CourseId == courseId).FirstOrDefault();
+
+            return View(model: studentcourse2);
+        }
+
+        [HttpPost]
+        public IActionResult AddDegrees(StudentCourse studentcourse)
+        {
+            var course = CourseRepository.GetAll(expression: e => e.CourseId == studentcourse.CourseId).FirstOrDefault();
+            if (
+                   studentcourse.StudentAttendancedegree > course.AttendanceDegree
+                || studentcourse.StudentMidTermDegree > course.MidTermDegree
+                || studentcourse.StudentFinalDegree > course.FinalDegree
+                || studentcourse.StudentOralDegree > course.OralDegree
+                || studentcourse.StudentPracticalDegree > course.PracticalDegree
+                )
+            {
+                TempData["Message"] = " Student degree must be not more than Exam degree";
+                return RedirectToAction(nameof(Resultpage2));
+
+            }
+            else
+            {
+                var studentcourse2 = StudentCourseRepository.GetAll(tracked : false).FirstOrDefault();
+                studentcourse.StudentCourseId = studentcourse2.StudentCourseId;
+                studentcourse.Degree = studentcourse.StudentFinalDegree + studentcourse.StudentMidTermDegree + studentcourse.StudentOralDegree + studentcourse.StudentPracticalDegree + studentcourse.StudentAttendancedegree;
+
+                if (studentcourse.Degree >= (0.9*course.Degree))
+                    studentcourse.Grade = 'A';
+                else if (studentcourse.Degree >= (0.75*course.Degree))
+                    studentcourse.Grade = 'B';
+                else if (studentcourse.Degree >= (0.6*course.Degree))
+                    studentcourse.Grade = 'C';
+                else if (studentcourse.Degree >= (0.5*course.Degree))
+                    studentcourse.Grade = 'D';
+
+                else 
+                    studentcourse.Grade = 'F';
+
+                StudentCourseRepository.Edit(studentcourse);
+                CourseRepository.Commit();
+                TempData["Message"] = " Degrees added successfully";
+                return RedirectToAction(nameof(Resultpage2));
+
+            }
+
         }
     }
 }

@@ -20,7 +20,7 @@
                 <th style="width: 5%;" scope="col">Degree</th>
                 <th style="width: 10%;" scope="col">Document</th>
                 <th style="width: 10%;" scope="col">Course Level</th>
-                <th style="width: 15%;" scope="col">Member Name</th>
+                <th style="width: 20%;" scope="col">Member Name</th>
                 <th style="width: 40%;" scope="col">Actions</th>
             </tr>
         </thead>
@@ -31,11 +31,12 @@
                     <td>@item.Course.Name</td>
                     <td>@item.Course.Hours</td>
                     <td>@item.Course.Degree</td>
-                    <td><a href="~/CourseDocument/@item.Course.DocumentUrl">Document</a></td>
+                    <td><a href="~/CourseDocument/@item.Course.DocumentUrl" target="_blank">Document</a></td>
                     <td>@item.Course.CourseLevel</td>
                 <td>@item.Course.Member.FName @item.Course.Member.MName @item.Course.Member.LName</td>
                     <td>
-                        <a href="" class="btn btn-dark" style="margin-left: 10px;">Degrees</a>
+                    <a href="/Admin/StudentCourse/Degrees?studentId=@item.StudentId&courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Degrees</a>
+                    <a href="" class="btn btn-dark" style="margin-left: 10px;">Assignments</a>
                     <a href="" class="btn btn-dark" style="margin-left: 10px;">Lectures</a>
                     <a href="" class="btn btn-dark" style="margin-left: 10px;">Sections</a>
                     </td>
@@ -43,3 +44,5 @@
             }
         </tbody>
     </table>
+
+<a href="/Customer/StudentDetailes/Index?StudentID=13">Back to List</a>
