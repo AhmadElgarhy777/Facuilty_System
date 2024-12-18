@@ -106,5 +106,11 @@ namespace GraduationProject.Areas.Customer.Controllers
             TempData["message"] = "The section is deleted sucesfully";
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult StudentSections(int CourseId)
+        {
+                var Studentsections = _sectionsRepository.GetAll(expression: s => s.CourseId == CourseId);
+                return View(Studentsections);
+        }
     }
 }

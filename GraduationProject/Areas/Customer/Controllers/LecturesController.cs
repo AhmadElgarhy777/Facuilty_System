@@ -110,5 +110,13 @@ namespace GraduationProject.Areas.Customer.Controllers
             TempData["message"] = "The lecture is deleted sucessfully";
             return RedirectToAction(nameof(Index));
         }
+
+
+        public IActionResult StudentLectures(int CourseId)
+        {
+                var Studentlectures = _lecturesRepository.GetAll(expression: s => s.CourseId == CourseId);
+                return View(Studentlectures);
+        }
+
     }
 }
