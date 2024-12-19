@@ -1,13 +1,18 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System.Configuration;
+using Utility;
 
 namespace GraduationProject.Areas.Admin.Controllers
-{      [Area("Admin")]
+{      
+    [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole},{SD.Professor},{SD.Student},{SD.Asseitant}")]
+
     public class TimetableController : Controller
     {
         private readonly ITimetableRepository timetableRepository;

@@ -1,15 +1,18 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.ViewModels;
+using Utility;
 
 namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole},{SD.Asseitant},{SD.Professor},{SD.Empolyee}")]
 
     public class ManagementController : Controller
     {
@@ -35,6 +38,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             if (page <= 0) page = 1;
+            if (totalPages == 0) totalPages = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Student> students = studentRepository.GetAll([e => e.Department]);
             ;
@@ -60,21 +64,25 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Delete(string id)
         {
-            var student = studentRepository.GetAll().FirstOrDefault(e => e.StudentId == id);
-            var newUser = await userManager.FindByIdAsync(id);
-            var result= await userManager.DeleteAsync(newUser);
-            if (result.Succeeded)
+            var student = studentRepository.GetOne().FirstOrDefault(e => e.StudentId == id);
+            if (student != null)
             {
-                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", student.ImgUrl);
-                if (System.IO.File.Exists(oldFilePath))
+                var newUser = await userManager.FindByIdAsync(id);
+                var result = await userManager.DeleteAsync(newUser);
+                if (result.Succeeded)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", student.ImgUrl);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                    studentRepository.Delete(student);
+                    studentRepository.Commit();
+                    TempData["success"] = "Delete student successfuly";
+                    return RedirectToAction("Index");
                 }
-                studentRepository.Delete(student);
-                studentRepository.Commit();
-                TempData["success"] = "Delete student successfuly";
-                return RedirectToAction("Index");
-            }else
+            }
+            else
 
                 TempData["error"] = "somthing is wrong... please go to the IT engineer for more detailes";
             return RedirectToAction("Index");
@@ -89,6 +97,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             if (page <= 0) page = 1;
+            if (totalPages == 0) totalPages = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Member> Professors = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 1);
             ;
@@ -117,20 +126,23 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
         
         public async Task<IActionResult> Delete_Professor(string id)
         {
-            var member = memberRepository.GetAll().FirstOrDefault(e => e.MemberId == id);
-            var newUser = await userManager.FindByIdAsync(id);
-            var result = await userManager.DeleteAsync(newUser);
-            if (result.Succeeded)
+            var member = memberRepository.GetOne().FirstOrDefault(e => e.MemberId == id);
+            if (member != null)
             {
-                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", member.ImgUrl);
-                if (System.IO.File.Exists(oldFilePath))
+                var newUser = await userManager.FindByIdAsync(id);
+                var result = await userManager.DeleteAsync(newUser);
+                if (result.Succeeded)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", member.ImgUrl);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                    memberRepository.Delete(member);
+                    memberRepository.Commit();
+                    TempData["success"] = "Delete Professor successfuly";
+                    return RedirectToAction("Index_Professor");
                 }
-                memberRepository.Delete(member);
-                memberRepository.Commit();
-                TempData["success"] = "Delete Professor successfuly";
-                return RedirectToAction("Index_Professor");
             }
             else
 
@@ -154,6 +166,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             if (page <= 0) page = 1;
+            if (totalPages == 0) totalPages = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Member> Assistants = memberRepository.GetAll([e => e.Department], e => e.IsProfessor == 0);
             ;
@@ -178,20 +191,23 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
       
         public async Task<IActionResult> Delete_Assistant(string id)
         {
-            var member = memberRepository.GetAll().FirstOrDefault(e => e.MemberId == id);
-            var newUser = await userManager.FindByIdAsync(id);
-            var result = await userManager.DeleteAsync(newUser);
-            if (result.Succeeded)
+            var member = memberRepository.GetOne().FirstOrDefault(e => e.MemberId == id);
+            if (member != null)
             {
-                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", member.ImgUrl);
-                if (System.IO.File.Exists(oldFilePath))
+                var newUser = await userManager.FindByIdAsync(id);
+                var result = await userManager.DeleteAsync(newUser);
+                if (result.Succeeded)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", member.ImgUrl);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                    memberRepository.Delete(member);
+                    memberRepository.Commit();
+                    TempData["success"] = "Delete Assistant successfuly";
+                    return RedirectToAction("Index_Assistant");
                 }
-                memberRepository.Delete(member);
-                memberRepository.Commit();
-                TempData["success"] = "Delete Assistant successfuly";
-                return RedirectToAction("Index_Assistant");
             }
             else
 
@@ -216,6 +232,7 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             if (page <= 0) page = 1;
+            if (totalPages == 0) totalPages = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Employee> employees = employeeRepository.GetAll();
             ;
@@ -241,20 +258,23 @@ namespace GraduationProject__FacuiltySystem__.Areas.Admin.Controllers
       
         public async Task<IActionResult> Delete_Empolyee(string id)
         {
-            var employee = employeeRepository.GetAll().FirstOrDefault(e => e.EmployeeId == id);
-            var newUser = await userManager.FindByIdAsync(id);
-            var result = await userManager.DeleteAsync(newUser);
-            if (result.Succeeded)
+            var employee = employeeRepository.GetOne().FirstOrDefault(e => e.EmployeeId == id);
+            if (employee != null)
             {
-                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", employee.ImgUrl);
-                if (System.IO.File.Exists(oldFilePath))
+                var newUser = await userManager.FindByIdAsync(id);
+                var result = await userManager.DeleteAsync(newUser);
+                if (result.Succeeded)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Img", employee.ImgUrl);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                    employeeRepository.Delete(employee);
+                    employeeRepository.Commit();
+                    TempData["success"] = "Delete Employee successfuly";
+                    return RedirectToAction("Index_Empolyee");
                 }
-                employeeRepository.Delete(employee);
-                employeeRepository.Commit();
-                TempData["success"] = "Delete Employee successfuly";
-                return RedirectToAction("Index_Empolyee");
             }
             TempData["error"] = "somthing is wrong... please go to the IT engineer for more detailes";
             return RedirectToAction("Index_Empolyee");

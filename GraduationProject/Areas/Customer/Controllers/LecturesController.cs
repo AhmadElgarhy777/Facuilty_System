@@ -1,13 +1,17 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using Utility;
 using static System.Collections.Specialized.BitVector32;
 
 namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize(Roles = $"{SD.AdminRole},{SD.Professor},{SD.Student}")]
+
     public class LecturesController : Controller
     {
         ILecturesRepository _lecturesRepository;

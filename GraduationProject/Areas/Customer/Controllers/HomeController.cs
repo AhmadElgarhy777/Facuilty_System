@@ -10,7 +10,6 @@ using Models.ViewModels;
 namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    //[Authorize(Policy = "Student")]
 
     public class HomeController : Controller
     {

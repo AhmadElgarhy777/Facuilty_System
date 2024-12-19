@@ -1,0 +1,48 @@
+﻿@using Azure.Core
+@using Models
+@model List<Student>
+
+<div class="row mb-3">
+    <div class="col-md-9">
+        <h2>Students for @ViewBag.CourseName Course :</h2>
+    </div>
+</div>
+@if (Model == null || !Model.Any())
+{
+    <p>No student in this course</p>
+}
+else
+{
+<div class="row">
+  
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">SSN</th>
+                <th scope="col">Department</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-light">
+                    <td>@item.FName @item.MName @item.LName</td>
+                    <td>@item.SSN</td>
+                    <td>@item.Department.Name</td>
+                    <td>
+                            <a type="button" class="btn btn-primary" asp-action="AddDegrees" asp-controller="StudentCourse" asp-area="Admin" asp-route-studentId="@item.StudentId" asp-route-courseId="@ViewBag.CourseId">
+                            <i class="bi bi-pencil-square"></i>Add Degree
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    
+</div>
+
+
+}

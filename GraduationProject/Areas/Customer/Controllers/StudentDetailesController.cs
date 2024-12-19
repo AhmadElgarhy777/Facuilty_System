@@ -1,12 +1,15 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Utility;
 
 namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize(Roles = $"{SD.AdminRole} ,{SD.Student}")]
 
     public class StudentDetailesController : Controller
     {

@@ -1,12 +1,16 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using Utility;
 
 namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize(Roles = $"{SD.AdminRole} , {SD.Asseitant},{SD.Student}")]
+
     public class SectionsController : Controller
     {
         ISectionsRepository _sectionsRepository;
@@ -86,7 +90,8 @@ namespace GraduationProject.Areas.Customer.Controllers
                 _sectionsRepository.Add(sections);
                 _sectionsRepository.Commit();
                 TempData["message"] = "The section is created sucesfully";
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(StudentSections), new { CourseId = sections.CourseId });
             }
             var Course = _courseRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.CourseId.ToString() });
             ViewBag.Course = Course;

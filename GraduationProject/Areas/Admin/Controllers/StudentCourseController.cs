@@ -1,15 +1,19 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Models;
 using Models.ViewModels;
 using System.Linq.Expressions;
+using Utility;
 
 namespace GraduationProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole},{SD.Professor},{SD.Student}")]
+
     public class StudentCourseController : Controller
     {
         IStudentCourseRepository StudentCourseRepository;

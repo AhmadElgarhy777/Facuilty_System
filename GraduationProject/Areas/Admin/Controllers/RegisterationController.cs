@@ -7,11 +7,12 @@ using Utility;
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DataAccess.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GraduationProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [Authorize (Roles =$"{SD.AdminRole}")]
     public class RegisterationController : Controller
     {
         private readonly IMemberPhoneRepository memberPhoneRepository;

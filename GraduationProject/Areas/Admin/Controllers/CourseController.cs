@@ -1,13 +1,16 @@
 ﻿using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Utility;
 
 namespace GraduationProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole}")]
 
     public class CourseController : Controller
     {
@@ -56,6 +59,7 @@ namespace GraduationProject.Areas.Admin.Controllers
             }
 
             courses = courses.Skip((page - 1) * pageSize).Take(pageSize);
+            
 
             return View(model: courses.ToList());
         }
@@ -66,7 +70,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.departments = DepartmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
 
-            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + " " + e.MName + " " + e.LName, Value = e.MemberId.ToString() });
+            ViewBag.members = MemberRepository.GetAll(expression:e=>e.IsProfessor==1).ToList().Select(e => new SelectListItem { Text = e.FName + " " + e.MName + " " + e.LName, Value = e.MemberId.ToString() });
 
 
             return View(model: course);

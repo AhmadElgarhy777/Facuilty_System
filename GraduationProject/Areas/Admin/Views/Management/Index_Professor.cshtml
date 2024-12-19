@@ -51,6 +51,9 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@item.MemberId">
                             <i class="bi bi-trash3-fill"></i>Delete
                         </button>
+                            <a type="button" class="btn btn-primary" asp-action="ProfessorCourses" asp-controller="ProfessorDetailes" asp-area="Customer" asp-route-ProfID="@item.MemberId">
+                                <i class="bi bi-book-fill"></i>Courses
+                        </a>
                     </td>
                 </tr>
             }
