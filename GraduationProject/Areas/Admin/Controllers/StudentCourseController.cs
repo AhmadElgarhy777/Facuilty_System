@@ -29,6 +29,8 @@ namespace GraduationProject.Areas.Admin.Controllers
         {
              var studentcourse = StudentCourseRepository.GetAll(includeProp :[e => e.Course , e => e.Student , e => e.Course.Member], expression: e => e.StudentId == studentId).ToList();
 
+            ViewBag.studentId = studentId;
+
             return View(model : studentcourse);
         }
 
@@ -93,7 +95,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
         public IActionResult Delete(int courseId)
         {
-            var course = CourseRepository.GetAll(expression: e => e.CourseId == courseId).FirstOrDefault();
+            var course = CourseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();
 
             return View(model: course);
         }
@@ -101,9 +103,9 @@ namespace GraduationProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(string StudentSSN, int courseId)
         {
-            var student = StudentRepository.GetAll(expression: e => e.SSN == StudentSSN).FirstOrDefault();
+            var student = StudentRepository.GetOne(expression: e => e.SSN == StudentSSN).FirstOrDefault();
 
-            var course = CourseRepository.GetAll(expression: e => e.CourseId == courseId).FirstOrDefault();
+            var course = CourseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();
 
             var studentcourse = StudentCourseRepository.GetAll(expression: e => e.StudentId == student.StudentId);
 
@@ -157,7 +159,7 @@ namespace GraduationProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddDegrees(StudentCourse studentcourse)
         {
-            var course = CourseRepository.GetAll(expression: e => e.CourseId == studentcourse.CourseId).FirstOrDefault();
+            var course = CourseRepository.GetOne(expression: e => e.CourseId == studentcourse.CourseId).FirstOrDefault();
             if (
                    studentcourse.StudentAttendancedegree > course.AttendanceDegree
                 || studentcourse.StudentMidTermDegree > course.MidTermDegree
@@ -172,7 +174,7 @@ namespace GraduationProject.Areas.Admin.Controllers
             }
             else
             {
-                var studentcourse2 = StudentCourseRepository.GetAll(tracked : false).FirstOrDefault();
+                var studentcourse2 = StudentCourseRepository.GetOne(tracked : false).FirstOrDefault();
                 studentcourse.StudentCourseId = studentcourse2.StudentCourseId;
                 studentcourse.Degree = studentcourse.StudentFinalDegree + studentcourse.StudentMidTermDegree + studentcourse.StudentOralDegree + studentcourse.StudentPracticalDegree + studentcourse.StudentAttendancedegree;
 

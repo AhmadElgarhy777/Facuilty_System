@@ -56,6 +56,8 @@ namespace Models
 
         public List<StudentPhone> StudentPhones { get; set; }
 
+        public List<StudentAssignment> StudentAssignments { get; set; }
+
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 

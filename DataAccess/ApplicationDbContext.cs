@@ -19,6 +19,8 @@ namespace DataAccess
         public DbSet<Lectures> Lectures { get; set; }
         public DbSet<Sections> Sections { get; set; }
         public DbSet<Timetable> Timetables { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<StudentAssignment> StudentAssignments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
@@ -57,6 +59,19 @@ namespace DataAccess
                 .WithMany(c => c.StudentCourses)
                 .HasForeignKey(sc => sc.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<StudentAssignment>()
+               .HasOne(sa => sa.Student)
+               .WithMany(s => s.StudentAssignments)
+               .HasForeignKey(sa => sa.StudentId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<StudentAssignment>()
+              .HasOne(sa => sa.Assignment)
+              .WithMany(a => a.StudentAssignments)
+              .HasForeignKey(sa => sa.AssignmentId)
+              .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.Entity<Timetable>()
                 .HasOne(t => t.Section)
