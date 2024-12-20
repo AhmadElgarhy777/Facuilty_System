@@ -109,7 +109,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.departments = DepartmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
 
-            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + e.MName + e.LName, Value = e.MemberId.ToString() });
+            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + " " + e.MName + " " + e.LName, Value = e.MemberId.ToString() });
 
             return View(model: course);
         }
@@ -133,7 +133,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.departments = DepartmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
 
-            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + e.MName + e.LName, Value = e.MemberId.ToString() });
+            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + " " + e.MName + " " + e.LName, Value = e.MemberId.ToString() });
 
             return View(course);
         }
@@ -184,7 +184,7 @@ namespace GraduationProject.Areas.Admin.Controllers
 
             ViewBag.departments = DepartmentRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.DepartmentId.ToString() });
 
-            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + e.MName + e.LName, Value = e.MemberId.ToString() });
+            ViewBag.members = MemberRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.FName + " " + e.MName + " " + e.LName, Value = e.MemberId.ToString() });
 
             return View(model: course);
         }

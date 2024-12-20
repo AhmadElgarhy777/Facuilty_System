@@ -3,11 +3,13 @@ using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Models;
 using Models.ViewModels;
 using System.Linq.Expressions;
 using Utility;
+using System.Reflection.Emit;
 
 namespace GraduationProject.Areas.Admin.Controllers
 {
@@ -31,16 +33,122 @@ namespace GraduationProject.Areas.Admin.Controllers
         }
         public IActionResult Index(string studentId)
         {
-             var studentcourse = StudentCourseRepository.GetAll(includeProp :[e => e.Course , e => e.Student , e => e.Course.Member], expression: e => e.StudentId == studentId).ToList();
+            var student = StudentRepository.GetOne(expression: e => e.StudentId == studentId).FirstOrDefault();
 
             ViewBag.studentId = studentId;
 
-            return View(model : studentcourse);
+            var studentcourses = StudentCourseRepository.GetAll(includeProp: [e => e.Course],expression: e => e.StudentId == studentId).ToList();
+
+            EnumLevel[] levels = { EnumLevel.First_Level, EnumLevel.Secound_Level, EnumLevel.Third_Level, EnumLevel.Fourth_Level };
+
+            levels = levels.Where(level => level <= student.Level).ToArray();
+
+            ViewBag.Levels = levels;
+
+            List <char> grade = new List<char>();
+
+            int sumOftotalStudentDegree = 0;
+            int sumOftotalCourseDegree = 0;
+            char totalgrade;
+
+            foreach (EnumLevel level in levels)
+            {
+                var studentCoursesForLevel = studentcourses.Where(e => e.Course.CourseLevel == level).ToList();
+
+                int sumOfStudentDegree = 0;
+                int sumOfCourseDegree = 0;
+                bool failedFlag = false;
+
+                foreach (var item in studentCoursesForLevel)
+                {
+                    if (item.Grade == 'F')
+                    {
+                        failedFlag = true;
+                        break;
+                    }
+
+                    sumOfStudentDegree += item.Degree;
+                    sumOfCourseDegree += item.Course.Degree;
+                }
+
+                sumOftotalStudentDegree = sumOftotalStudentDegree + sumOfStudentDegree;
+                sumOftotalCourseDegree = sumOftotalCourseDegree + sumOfCourseDegree;
+
+                char levelGrade;
+
+                if (failedFlag)
+                {
+                    levelGrade = 'F';
+                }
+                else
+                {
+                    double levelPercent = 0;
+                    if (sumOfCourseDegree > 0)
+                    {
+                        levelPercent = (double)sumOfStudentDegree * 100 / sumOfCourseDegree;
+                    }
+
+                    if (levelPercent >= 90)
+                        levelGrade = 'A';
+                    else if (levelPercent >= 75)
+                        levelGrade = 'B';
+                    else if (levelPercent >= 60)
+                        levelGrade = 'C';
+                    else if (levelPercent >= 50)
+                        levelGrade = 'D';
+                    else
+                        levelGrade = 'F';
+                }
+
+                grade.Add(levelGrade);
+
+            }
+
+            if ( grade.Contains('F'))
+            {
+                totalgrade = 'F';
+            }
+            else
+            {
+                double TotalPercent = 0;
+
+                if (sumOftotalCourseDegree > 0)
+                {
+                    TotalPercent = (double)sumOftotalStudentDegree * 100 / sumOftotalCourseDegree;
+                }
+
+                if (TotalPercent >= 90)
+                    totalgrade = 'A';
+                else if (TotalPercent >= 75)
+                    totalgrade = 'B';
+                else if (TotalPercent >= 60)
+                    totalgrade = 'C';
+                else if (TotalPercent >= 50)
+                    totalgrade = 'D';
+                else
+                    totalgrade = 'F';
+
+            }
+
+            ViewBag.totalgrade = totalgrade;
+
+            return View(model : grade);
+        }
+
+        public IActionResult Index2(string studentId , EnumLevel level)
+        {
+            var studentcourses = StudentCourseRepository.GetAll(includeProp: [e => e.Course, e => e.Course.Member], expression: e => e.StudentId == studentId);
+
+            var studentcourses2 = studentcourses.Where(e => e.Course.CourseLevel == level).ToList();
+
+            ViewBag.studentId = studentId;
+
+            return View(model: studentcourses2);
         }
 
         public IActionResult Create( int courseId)
         {
-            var course = CourseRepository.GetAll( expression: e => e.CourseId == courseId).FirstOrDefault();
+            var course = CourseRepository.GetOne( expression: e => e.CourseId == courseId).FirstOrDefault();
 
             return View(model : course);
         }
@@ -48,9 +156,9 @@ namespace GraduationProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(string StudentSSN , int courseId)
         {
-            var student = StudentRepository.GetAll(expression: e => e.SSN == StudentSSN).FirstOrDefault();
+            var student = StudentRepository.GetOne(expression: e => e.SSN == StudentSSN).FirstOrDefault();
 
-            var course = CourseRepository.GetAll(expression: e => e.CourseId == courseId).FirstOrDefault();
+            var course = CourseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();
 
             var studentcourse = StudentCourseRepository.GetAll(expression: e => e.StudentId == student.StudentId);
 
@@ -90,10 +198,14 @@ namespace GraduationProject.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Resultpage2()
+        public IActionResult Resultpage2(int courseId)
         {
             string message = TempData["Message"] as string;
+
             ViewBag.Message = message;
+
+            ViewBag.CourseId = courseId;
+
             return View();
         }
 
@@ -173,13 +285,11 @@ namespace GraduationProject.Areas.Admin.Controllers
                 )
             {
                 TempData["Message"] = " Student degree must be not more than Exam degree";
-                return RedirectToAction(nameof(Resultpage2));
+                return RedirectToAction(nameof(Resultpage2), new { studentcourse.CourseId });
 
             }
             else
             {
-                var studentcourse2 = StudentCourseRepository.GetOne(tracked : false).FirstOrDefault();
-                studentcourse.StudentCourseId = studentcourse2.StudentCourseId;
                 studentcourse.Degree = studentcourse.StudentFinalDegree + studentcourse.StudentMidTermDegree + studentcourse.StudentOralDegree + studentcourse.StudentPracticalDegree + studentcourse.StudentAttendancedegree;
 
                 if (studentcourse.Degree >= (0.9*course.Degree))
@@ -197,7 +307,36 @@ namespace GraduationProject.Areas.Admin.Controllers
                 StudentCourseRepository.Edit(studentcourse);
                 CourseRepository.Commit();
                 TempData["Message"] = " Degrees added successfully";
-                return RedirectToAction(nameof(Resultpage2));
+
+
+                var studentcourses = StudentCourseRepository.GetAll(includeProp: [e => e.Course], expression: e => e.StudentId == studentcourse.StudentId);
+
+                var level = studentcourse.Course.CourseLevel;
+
+                var studentcourses2 = studentcourses.Where(e => e.Course.CourseLevel == level).ToList();
+
+                var courses = CourseRepository.GetAll(expression: e => e.CourseLevel == level).ToList();
+
+                var allCoursesEnrolled = courses.All(course =>studentcourses2.Any(sc => sc.CourseId == course.CourseId));
+
+                if (allCoursesEnrolled == true)
+                {
+                    var passedAllCourses = studentcourses2.All(sc => sc.Grade != 'F' && (sc.Grade == 'A' || sc.Grade == 'B' || sc.Grade == 'C' || sc.Grade == 'D'));
+
+                    if (passedAllCourses == true)
+                    {
+                       var student = StudentRepository.GetOne(expression : e => e.StudentId == studentcourse.StudentId).FirstOrDefault();
+
+                        student.Level++;
+
+                        StudentRepository.Edit(student);
+                        StudentRepository.Commit();
+                    }
+
+                }
+
+
+                return RedirectToAction(nameof(Resultpage2), new { studentcourse.CourseId });
 
             }
 
