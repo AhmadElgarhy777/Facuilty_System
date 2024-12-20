@@ -24,6 +24,9 @@ namespace Models
         [Required]
         public EnumLevel CourseLevel { get; set; }
 
+        [Required]
+        public string AssistantId { get; set; }
+
         [ValidateNever]
         public List<Lectures> Lectures { get; set; }
 

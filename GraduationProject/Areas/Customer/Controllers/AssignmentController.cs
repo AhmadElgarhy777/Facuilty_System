@@ -25,9 +25,12 @@ namespace GraduationProject.Areas.Customer.Controllers
 
             var assignment = AssignmentRepository.GetOne(includeProp: [e => e.Course] , expression: e => e.CourseId == courseId).FirstOrDefault();
 
-            var memberid = assignment.Course.MemberId;
+            if (assignment != null)
+            {
+                var memberid = assignment.Course.MemberId;
+                ViewBag.MemberId = memberid;
 
-            ViewBag.MemberId = memberid;
+            }
 
             ViewBag.CourseId = courseId;
             var course = courseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();

@@ -58,11 +58,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="CourseLevel" class="control-label"></label>
-                 <select asp-for="CourseLevel" class="form-control" asp-items="@(new SelectList(Enum.GetValues(typeof(EnumLevel))))"></select>
+                <select asp-for="CourseLevel" class="form-control" asp-items="@(new SelectList(Enum.GetValues(typeof(EnumLevel))))"><option>Select Level</option></select>
             </div>
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label">Professor</label>
                 <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.members"><option>Select Professor</option></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AssistantId" class="control-label">Assistant</label>
+                <select asp-for="AssistantId" class="form-control" asp-items="ViewBag.members2"><option>Select Assistant</option></select>
+                <span asp-validation-for="AssistantId" class="text-danger"></span>
             </div>
       
             <div class="form-group">
