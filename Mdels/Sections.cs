@@ -18,7 +18,6 @@ namespace Models
         public string SecURL { get; set; } = null!;
         public int CourseId { get; set; }
         //public EnumLevel CourseLevel { get; set; }
-        public ICollection<Timetable> Timetables { get; set; } = new HashSet<Timetable>();
         [ValidateNever]
 
         public Course Course { get; set; }

@@ -1,58 +1,59 @@
-﻿@model Models.Timetable
+﻿@model Models.TableLecSec
 
-<h4 class="mb-4 text-primary">Edit Timetable in @Model.Day</h4>
+<h4 class="mb-4 text-primary">Edit Timetable for @ViewBag.day</h4>
 <hr />
+
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-body">
-                    
-                <form asp-action="Edit">
+                <form asp-action="Edit" method="post">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                    <input asp-for="Day" type="hidden" value="@Model.Day" />
+
+                    <!-- Day Field (Hidden) -->
+                    <input type="hidden" asp-for="TimetableId"  class="form-control" />
+                    <input type="hidden" asp-for="TableLecSecId"  class="form-control" />
+
+                    <div class="mb-3">
+                        <label asp-for="Type" class="form-label fw-bold">Type</label>
+                        <select class="form-select" asp-for="Type" required>
+                            <option value="">Select Type</option>
+                            @foreach (var item in ViewBag.EnumType)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+
+                    <!-- Start Time -->
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">Name</label>
+                        <input asp-for="Name" type="text" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
                     <div class="mb-3">
                         <label asp-for="StartTime" class="form-label fw-bold">Start Time</label>
                         <input asp-for="StartTime" type="time" class="form-control" />
                         <span asp-validation-for="StartTime" class="text-danger"></span>
                     </div>
 
+                    <!-- End Time -->
                     <div class="mb-3">
                         <label asp-for="EndTime" class="form-label fw-bold">End Time</label>
                         <input asp-for="EndTime" type="time" class="form-control" />
                         <span asp-validation-for="EndTime" class="text-danger"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="SectionId" class="form-label fw-bold">Section</label>
-                        <select asp-for="SectionId" class="form-select">
-                            <option value="" selected>-- Select Section --</option>
-                            @foreach (var item in ViewBag.sections)
-                            {
-                                <option value="@item.SectionsId">@item.Name</option>
-                            }
-                        </select>
-                        <span asp-validation-for="SectionId" class="text-danger"></span>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="LectureId" class="form-label fw-bold">Lecture</label>
-                        <select asp-for="LectureId" class="form-select">
-                            <option value="" selected>-- Select Lecture --</option>
-                            @foreach (var item in ViewBag.lectures)
-                            {
-                                <option value="@item.LecturesId">@item.Name</option>
-                            }
-                        </select>
-                        <span asp-validation-for="LectureId" class="text-danger"></span>
-                    </div>
-
-                    <div class="d-grid">
+                    <!-- Submit Button -->
+                    <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="bi bi-save"></i> Edit
                         </button>
                     </div>
                 </form>
-                
             </div>
         </div>
 
@@ -68,4 +69,6 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+
 }

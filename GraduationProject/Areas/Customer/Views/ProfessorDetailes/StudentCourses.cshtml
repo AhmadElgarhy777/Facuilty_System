@@ -35,6 +35,9 @@ else
                             <a type="button" class="btn btn-primary" asp-action="AddDegrees" asp-controller="StudentCourse" asp-area="Admin" asp-route-studentId="@item.StudentId" asp-route-courseId="@ViewBag.CourseId">
                             <i class="bi bi-pencil-square"></i>Add Degree
                         </a>
+                        <a type="button" class="btn btn-primary" asp-action="Index2" asp-controller="StudentAssignment" asp-area="Customer" asp-route-studentId="@item.StudentId" asp-route-courseId="@ViewBag.CourseId">
+                                <i class="bi bi-list-task"></i>Student Assinment
+                        </a>
                     </td>
                 </tr>
             }

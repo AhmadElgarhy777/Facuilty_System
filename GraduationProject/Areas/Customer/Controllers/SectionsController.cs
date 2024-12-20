@@ -9,7 +9,7 @@ using Utility;
 namespace GraduationProject.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    [Authorize(Roles = $"{SD.AdminRole} , {SD.Asseitant},{SD.Student}")]
+    [Authorize(Roles = $"{SD.AdminRole} , {SD.Asseitant},{SD.Student},{SD.Professor}")]
 
     public class SectionsController : Controller
     {
@@ -55,12 +55,47 @@ namespace GraduationProject.Areas.Customer.Controllers
 
             return View(model: sections.ToList());
         }
+        public IActionResult Index2(int CourseID, int page = 1, string search = null)
+        {
 
-        public IActionResult Create()
+            int pageSize = 5;
+            var totalProducts = _sectionsRepository.GetAll([]).Count();
+
+            //var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalProducts / pageSize));
+
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Sections> sections = _sectionsRepository.GetAll([e => e.Course], expression: e => e.Course.CourseId == CourseID);
+
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.Trim();
+                sections = sections.Where(e => e.Name.Contains(search));
+
+                if (!sections.Any())
+                {
+                    ViewBag.ErrorMessage = "No Courses found with that Name.";
+                }
+            }
+
+            sections = sections.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return View(model: sections.ToList());
+        }
+
+        public IActionResult Create(int CourseID = 0)
         {
             var Course = _courseRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.CourseId.ToString() });
             ViewBag.Course = Course;
             var section = new Sections();
+            if (CourseID > 0) { section.CourseId = CourseID; }
             return View(section);
         }
 
@@ -91,7 +126,9 @@ namespace GraduationProject.Areas.Customer.Controllers
                 _sectionsRepository.Commit();
                 TempData["message"] = "The section is created sucesfully";
                 //return RedirectToAction(nameof(Index));
-                return RedirectToAction(nameof(StudentSections), new { CourseId = sections.CourseId });
+                return RedirectToAction(nameof(Index2), new { CourseID = sections.CourseId });
+
+                //return RedirectToAction(nameof(StudentSections), new { CourseId = sections.CourseId });
             }
             var Course = _courseRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.CourseId.ToString() });
             ViewBag.Course = Course;

@@ -1,8 +1,6 @@
-﻿
-@model List<Course>
+﻿@model List<Course>
 <h2>Professor Courses</h2>
 <div class="row">
-
     <table class="table table-hover">
         <thead>
             <tr>
@@ -12,7 +10,6 @@
                 <th style="width: 15%;" scope="col">Document</th>
                 <th style="width: 10%;" scope="col">Course Level</th>
                 <th style="width: 10%;" scope="col">Department</th>
-                <th style="width: 30%;" scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,16 +22,29 @@
                     <td><a href="~/CourseDocument/@item.DocumentUrl" target="_blank">Document</a></td>
                     <td>@item.CourseLevel</td>
                     <td>@item.Department.Name</td>
-
-                    <td>
-                        <a asp-action="StudentCourses" asp-route-CourseID="@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">StudentCourse</a>
+                </tr>
+                <tr class="table-secondary">
+                    <td colspan="6">
+                        <div class="d-flex flex-wrap gap-2 justify-content-start">
+                            <a asp-action="StudentCourses" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
+                                <i class="bi bi-book"></i> StudentCourse
+                            </a>
+                            <a asp-action="Index" asp-controller="Assignment" asp-area="Customer" asp-route-CourseId="@item.CourseId" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil-square"></i> Assignment
+                            </a>
+                            <a asp-action="Index2" asp-controller="Lectures" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
+                                <i class="bi bi-collection"></i> Lectures
+                            </a>
+                            <a asp-action="Create" asp-controller="Lectures" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-square"></i> Add Lecture
+                            </a>
+                            <a asp-action="Index2" asp-controller="Sections" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
+                                <i class="bi bi-collection"></i> Sections
+                            </a>
+                        </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-   
-
-    

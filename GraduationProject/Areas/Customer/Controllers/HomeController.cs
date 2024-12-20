@@ -6,6 +6,7 @@ using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Utility;
 using Models.ViewModels;
+using DataAccess.Repository;
 
 namespace GraduationProject.Areas.Customer.Controllers
 {
@@ -13,13 +14,15 @@ namespace GraduationProject.Areas.Customer.Controllers
 
     public class HomeController : Controller
     {
+        private readonly IInquiryRepositry inquiryRepositry;
         private readonly EmailService emailService;
         private readonly ILogger<HomeController> _logger;
         private readonly IStudentRepository studentRepository;
         private readonly IMemberRepository memberRepository;
 
-        public HomeController(EmailService emailService, ILogger<HomeController> logger , IStudentRepository studentRepository , IMemberRepository memberRepository)
+        public HomeController(IInquiryRepositry inquiryRepositry,EmailService emailService, ILogger<HomeController> logger , IStudentRepository studentRepository , IMemberRepository memberRepository)
         {
+            this.inquiryRepositry = inquiryRepositry;
             this.emailService = emailService;
             _logger = logger;
             this.studentRepository = studentRepository;
@@ -55,6 +58,20 @@ namespace GraduationProject.Areas.Customer.Controllers
                 <p><strong>Message:</strong> {emailInstance.Message}</p>";
 
                 await emailService.SendEmailAsync(emailInstance.Email, subject, messageBody);
+                var inquiry = new Inquiry
+                {
+                    StudentEmail = emailInstance.Email,
+                    Subject = emailInstance.Subject,
+                    Message = emailInstance.Message,
+                    DateSent = DateTime.Now,
+                    Status = EnumStatus.Unread,
+                    EmployeeNote="",
+                    EmployeeResponse=""
+
+                };
+
+                inquiryRepositry.Add(inquiry);
+                inquiryRepositry.Commit();
                 TempData["message"] = "Your message has been sent successfully!";
                 return View();
             }

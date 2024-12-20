@@ -58,13 +58,47 @@ namespace GraduationProject.Areas.Customer.Controllers
 
             return View(model: lectures.ToList());
         }
-
-
-        public IActionResult Create()
+        public IActionResult Index2(int CourseID, int page = 1, string search = null)
         {
+
+            int pageSize = 5;
+            var totalProducts = _lecturesRepository.GetAll([]).Count();
+
+            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalProducts / pageSize));
+
+
+            if (page <= 0) page = 1;
+            if (page > totalPages) page = totalPages;
+            IQueryable<Lectures> lectures = _lecturesRepository.GetAll([e => e.Course],expression:e=>e.Course.CourseId==CourseID);
+
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.Trim();
+                lectures = lectures.Where(e => e.Name.Contains(search));
+
+                if (!lectures.Any())
+                {
+                    ViewBag.ErrorMessage = "No Courses found with that Name.";
+                }
+            }
+
+            lectures = lectures.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return View(model: lectures.ToList());
+        }
+
+        public IActionResult Create(int CourseID=0)
+        {
+
             var Course = _courseRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.CourseId.ToString() });
             ViewBag.Course = Course;
             var lecture = new Lectures();
+            if (CourseID > 0) {lecture.CourseId= CourseID; }
             return View(lecture);
         }
 
@@ -94,7 +128,8 @@ namespace GraduationProject.Areas.Customer.Controllers
                 _lecturesRepository.Add(lecture);
                 _lecturesRepository.Commit();
                 TempData["message"] = "The lecture is added sucsesfully";
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index2), new { CourseID =lecture.CourseId});
             }
             var Course = _courseRepository.GetAll().ToList().Select(e => new SelectListItem { Text = e.Name, Value = e.CourseId.ToString() });
             ViewBag.Course = Course;
@@ -121,6 +156,8 @@ namespace GraduationProject.Areas.Customer.Controllers
                 var Studentlectures = _lecturesRepository.GetAll(expression: s => s.CourseId == CourseId);
                 return View(Studentlectures);
         }
+        
+
 
     }
 }

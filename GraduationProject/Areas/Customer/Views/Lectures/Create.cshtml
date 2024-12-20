@@ -21,7 +21,7 @@
             <div class="mb-3">
                 <label for="CourseId" class="form-label">Course</label>
                 <select class="form-select" asp-for="CourseId" asp-items="ViewBag.Course" required>
-                    <option value="">Select Course</option>
+                    <option value="@Model.CourseId">Select Course</option>
                 </select>
                 <div class="invalid-feedback">
                     Please select a Course.

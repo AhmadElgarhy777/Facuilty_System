@@ -10,22 +10,12 @@ namespace Models
         public int TimetableId { get; set; }
 
         [Required]
-        public string Day { get; set; } = null!;  
-
-        [Required]
-        public TimeSpan StartTime { get; set; }  
-
-        [Required]
-        public TimeSpan EndTime { get; set; }
-
-        public bool? isDay { get; set; }
+        [Column(TypeName = "nvarchar(max)")]
+        public EnumTableDay Day { get; set; }   
+        public List<TableLecSec> TableLecSecs { get; set; }
 
 
-        public int? SectionId { get; set; }
-        public Sections? Section { get; set; }
 
-        // Allow LectureId to be nullable
-        public int? LectureId { get; set; }
-        public Lectures? Lecture { get; set; }
+
     }
 }

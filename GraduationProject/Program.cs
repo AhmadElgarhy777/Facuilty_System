@@ -7,6 +7,7 @@ using DataAccess.Repository;
 using DataAccess.Repository.IRepository;
 using Models;
 using Utility;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace GraduationProject
 {
@@ -28,8 +29,13 @@ namespace GraduationProject
             builder.Services.AddScoped<IStudentPhoneRepository, StudentPhoneRepository>();
             builder.Services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
             builder.Services.AddScoped<ITimetableRepository, TimetableRepository>();
+            builder.Services.AddScoped<ITableLecSecRepositry, TableLecSecRepositry>();
             builder.Services.AddScoped<ISectionRepository, SectionRepository>();
             builder.Services.AddScoped<ILectureRepository, LectureRepository>();
+            builder.Services.AddScoped<IInquiryRepositry, InquiryRepositry>();
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
             builder.Services.AddScoped<IMemberRepository, MemberRepository>();
             builder.Services.AddScoped<IMemberPhoneRepository, MemberPhoneRepository>();

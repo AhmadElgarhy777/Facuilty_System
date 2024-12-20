@@ -21,6 +21,7 @@ namespace DataAccess
         public DbSet<Timetable> Timetables { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<StudentAssignment> StudentAssignments { get; set; }
+        public DbSet<Inquiry> Inquirys { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
@@ -73,17 +74,7 @@ namespace DataAccess
               .OnDelete(DeleteBehavior.Restrict);
 
 
-            builder.Entity<Timetable>()
-                .HasOne(t => t.Section)
-                .WithMany(s => s.Timetables)
-                .HasForeignKey(t => t.SectionId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Timetable>()
-                .HasOne(t => t.Lecture)
-                .WithMany(l => l.Timetables)
-                .HasForeignKey(t => t.LectureId)
-                .OnDelete(DeleteBehavior.NoAction);
+           
 
             // إعداد القيم التلقائية (auto-increment) بشكل صحيح
             builder.Entity<StudentPhone>()
