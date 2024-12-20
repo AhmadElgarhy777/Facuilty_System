@@ -36,14 +36,13 @@
                 <td>@item.Course.Member.FName @item.Course.Member.MName @item.Course.Member.LName</td>
                     <td>
                     <a href="/Admin/StudentCourse/Degrees?studentId=@item.StudentId&courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Degrees</a>
-                    <a href="" class="btn btn-dark" style="margin-left: 10px;">Assignments</a>
-                    <a href="" class="btn btn-dark" style="margin-left: 10px;">Lectures</a>
-                    <a href="" class="btn btn-dark" style="margin-left: 10px;">Sections</a>
-                    
-      </td>
+                    <a href="/Customer/StudentAssignment/CourseAssignments?courseId=@item.CourseId&studentId=@item.StudentId" class="btn btn-dark" style="margin-left: 10px;">Assignments</a>
+                    <a href="/Customer/Lectures/StudentLectures?CourseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Lectures</a>
+                    <a href="/Customer/Sections/StudentSections?CourseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Sections</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 
-<a href="/Customer/StudentDetailes/Index?StudentID=13">Back to List</a>
+<a href="/Customer/StudentDetailes/Index?StudentID=@ViewBag.studentId">Back to List</a>

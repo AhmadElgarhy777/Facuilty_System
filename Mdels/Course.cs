@@ -41,6 +41,9 @@ namespace Models
         public string MemberId { get; set; } 
         public int DepartmentId { get; set; }
 
+        [ValidateNever]
+        public List<Assignment> Assignments { get; set; }
+
         [Required]
         public int AttendanceDegree { get; set; }
         [Required]
