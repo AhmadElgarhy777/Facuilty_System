@@ -31,7 +31,7 @@ namespace GraduationProject.Areas.Customer.Controllers
         }
         public IActionResult AssistantCourses(string AssID)
         {
-            var Courses = courseRepository.GetAll(includeProp: [e => e.Department], expression: e => e.Member.MemberId == AssID).ToList();
+            var Courses = courseRepository.GetAll(includeProp: [e => e.Department], expression: e => e.AssistantId== AssID).ToList();
             return View(model: Courses);
 
         }

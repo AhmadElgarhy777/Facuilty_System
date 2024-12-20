@@ -11,7 +11,7 @@
         <h1 style="font-size: 2.5em; font-weight: bold;">Assignments</h1>
     </div>
     <div class="col-3">
-        <a href="/Customer/Assignment/Create?courseId=@ViewBag.CourseId" class="btn btn-danger">Create New Assignment</a>
+        <a href="/Customer/Assignment/Create?courseId=@ViewBag.CourseId" class="btn btn-danger">Add New Assignment</a>
     </div>
 </div>
 
@@ -39,8 +39,10 @@
         </tbody>
     </table>
 
-<div class="mt-4">
-    <a href="/Customer/ProfessorDetailes/ProfessorCourses?ProfID=@ViewBag.ProfID" class="btn btn-secondary">
+
+
+<div class="mt-4 mb-4">
+    <a href="/Customer/ProfessorDetailes/ProfessorCourses?ProfID=@ViewBag.MemberId" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Back to List
     </a>
 </div>

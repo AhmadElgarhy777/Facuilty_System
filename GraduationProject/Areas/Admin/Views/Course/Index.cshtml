@@ -27,24 +27,25 @@
             </div>
         </div>
     </form>
-
+    </div>
     @if (ViewBag.ErrorMessage != null)
     {
         <div class="alert alert-warning">@ViewBag.ErrorMessage</div>
     }
 
+    <div class="table-responsive">
 
-<table class="table table-hover">
-    <thead>
+    <table class="table table-bordered">
+        <thead class="table-primary">
         <tr>
-            <th style="width: 10%;" scope="col">Name</th>
-            <th style="width: 5%;" scope="col">Hours</th>
-            <th style="width: 5%;" scope="col">Degree</th>
-            <th style="width: 10%;" scope="col">Document</th>
-            <th style="width: 10%;" scope="col">Course Level</th>
-            <th style="width: 15%;" scope="col">Professor Name</th>
-            <th style="width: 5%;" scope="col">Department</th>
-            <th style="width: 40%;" scope="col">Actions</th>
+            <th  >Name</th>
+            <th >Hours</th>
+            <th >Degree</th>
+            <th >Document</th>
+            <th >Course Level</th>
+            <th >Professor Name</th>
+            <th >Department</th>
+            <th >Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -54,21 +55,24 @@
                 <td>@item.Name</td>
                 <td>@item.Hours</td>
                 <td>@item.Degree</td>
-                    <td><a href="~/CourseDocument/@item.DocumentUrl" target="_blank">Document</a></td>
+                    <td><a href="~/CourseDocument/@item.DocumentUrl" target="_blank" class="btn btn-link  text-decoration-none">Document</a></td>
                     <td>@item.CourseLevel</td>
                 <td>@item.Member.FName @item.Member.MName @item.Member.LName</td>
                 <td>@item.Department.Name</td>
 
                 <td>
-                     <a href="/Admin/Course/Edit?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Edit</a>
-                     <a href="#" class="btn btn-dark btn-delete" data-id="@item.CourseId" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
-                     <a href="/Admin/StudentCourse/Create?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Add Student</a>
-                        <a href="/Admin/StudentCourse/Delete?courseId=@item.CourseId" class="btn btn-dark" style="margin-left: 10px;">Delete Student</a>
-                </td>
+                        <div class="d-flex flex-column gap-2">
+                            <a href="/Admin/Course/Edit?courseId=@item.CourseId" class="btn btn-primary btn-sm" style="margin-left: 10px;">Edit</a>
+                            <a href="#" class="btn btn-primary btn-sm" data-id="@item.CourseId" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                            <a href="/Admin/StudentCourse/Create?courseId=@item.CourseId" class="btn btn-primary btn-sm" style="margin-left: 10px;">Add Student</a>
+                            <a href="/Admin/StudentCourse/Delete?courseId=@item.CourseId" class="btn btn-primary btn-sm" style="margin-left: 10px;">Delete Student</a>
+                        </div>
+                    </td>
             </tr>
         }
     </tbody>
 </table>
+    </div>
 
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -91,7 +95,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <script>

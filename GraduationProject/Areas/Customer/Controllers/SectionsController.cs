@@ -70,7 +70,9 @@ namespace GraduationProject.Areas.Customer.Controllers
             IQueryable<Sections> sections = _sectionsRepository.GetAll([e => e.Course], expression: e => e.Course.CourseId == CourseID);
 
             var course = _courseRepository.GetOne(expression: e => e.CourseId == CourseID).FirstOrDefault();
+            ViewBag.AssID = course.AssistantId;
             ViewBag.ProfID = course.MemberId;
+            
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
 

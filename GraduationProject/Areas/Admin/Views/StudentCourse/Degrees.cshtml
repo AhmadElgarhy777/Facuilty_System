@@ -1,14 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Course Degrees";
+﻿@model StudentCourse
+
+@{
+    ViewData["Title"] = Model.Course.Name + " Degrees";
 }
 
 
-@model StudentCourse
+
 
 
 <div class="row mb-3">
     <div class="col-9">
-        <h1 style="font-size: 2.5em; font-weight: bold;">Course Degrees</h1>
+        <h1 style="font-size: 2.5em; font-weight: bold;">@Model.Course.Name Degrees</h1>
     </div>
 </div>
 
@@ -40,7 +42,7 @@
 </table>
 
 <div class="mt-4">
-    <a href="/Admin/StudentCourse/Index?studentId=@Model.StudentId" class="btn btn-secondary">
+    <a href="/Admin/StudentCourse/Index2?studentId=@Model.StudentId&level=@Model.Course.CourseLevel" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Back to List
     </a>
 </div>

@@ -12,11 +12,17 @@ namespace GraduationProject.Areas.Customer.Controllers
         IStudentAssignmentRepository StudentAssignmentRepository;
 
         IAssignmentRepository AssignmentRepository;
-        public StudentAssignmentController(IStudentAssignmentRepository StudentAssignmentRepository , IAssignmentRepository AssignmentRepository)
+
+        ICourseRepository CourseRepository;
+
+        public StudentAssignmentController(IStudentAssignmentRepository StudentAssignmentRepository , IAssignmentRepository AssignmentRepository , ICourseRepository CourseRepository)
         {
             this.StudentAssignmentRepository = StudentAssignmentRepository;
 
             this.AssignmentRepository = AssignmentRepository;
+
+            this.CourseRepository = CourseRepository;
+
 
         }
         public IActionResult CourseAssignments(int courseId , string studentId)
@@ -26,6 +32,10 @@ namespace GraduationProject.Areas.Customer.Controllers
             ViewBag.studentId = studentId;
 
             ViewBag.courseId = courseId;
+
+            var course = CourseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();
+
+            ViewBag.level = course.CourseLevel;
 
             return View(model: assignments);
         }

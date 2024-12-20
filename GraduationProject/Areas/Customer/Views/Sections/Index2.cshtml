@@ -1,4 +1,5 @@
-﻿@model List<Sections>
+﻿@using Utility
+@model List<Sections>
 @section Scripts {
     <partial name="_TempDataPartial.cshtml">
 }
@@ -40,7 +41,7 @@
             {
                     <tr class="table-light">
                         <td>@item.Name</td>
-                        <td><a href="~/LectureDocument/@item.SecURL" target="_blank">Document</a></td>
+                        <td><a href="~/LectureDocument/@item.SecURL" target="_blank " class=" text-decoration-none">Document</a></td>
                         <td>@item.Course.Name</td>
                         
                     </tr>
@@ -50,11 +51,22 @@
 
 
     </div>
+@if (User.IsInRole(SD.Asseitant))
+{
     <div class="mt-4 mb-4">
-        <a href="/Customer/ProfessorDetailes/ProfessorCourses?ProfID=@ViewBag.ProfID" class="btn btn-secondary">
+        <a href="/Customer/Assistant/AssistantCourses?AssID=@ViewBag.AssID" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> Back to List
         </a>
     </div>
+    }
+@if (User.IsInRole(SD.Professor))
+{
+    <div class="mt-4 mb-4">
+            <a href="/Customer/ProfessorDetailes/ProfessorCourses?ProfID=@ViewBag.ProfID" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+    }
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var deleteButtons = document.querySelectorAll('.btn-delete');
