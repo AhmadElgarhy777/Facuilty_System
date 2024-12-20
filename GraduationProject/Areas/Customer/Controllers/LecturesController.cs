@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using NuGet.Protocol.Core.Types;
 using Utility;
 using static System.Collections.Specialized.BitVector32;
 
@@ -70,7 +71,8 @@ namespace GraduationProject.Areas.Customer.Controllers
             if (page <= 0) page = 1;
             if (page > totalPages) page = totalPages;
             IQueryable<Lectures> lectures = _lecturesRepository.GetAll([e => e.Course],expression:e=>e.Course.CourseId==CourseID);
-
+            var course = _courseRepository.GetOne(expression: e => e.CourseId == CourseID).FirstOrDefault();
+            ViewBag.ProfID = course.MemberId;
 
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
@@ -147,13 +149,17 @@ namespace GraduationProject.Areas.Customer.Controllers
             _lecturesRepository.Delete(lectures);
             _lecturesRepository.Commit();
             TempData["message"] = "The lecture is deleted sucessfully";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index2), new
+            {
+                CourseID=lectures.CourseId
+            });
         }
 
 
         public IActionResult StudentLectures(int CourseId)
         {
                 var Studentlectures = _lecturesRepository.GetAll(expression: s => s.CourseId == CourseId);
+                
                 return View(Studentlectures);
         }
         

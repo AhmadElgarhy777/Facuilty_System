@@ -33,12 +33,17 @@
                         <a href="#" class="btn btn-dark btn-delete" data-id="@item.AssignmentId" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
                     </td>
                 </tr>
+
+              
             }
         </tbody>
     </table>
 
-<a href="">Back to List</a>
-
+<div class="mt-4">
+    <a href="/Customer/ProfessorDetailes/ProfessorCourses?ProfID=@ViewBag.ProfID" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+</div>
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">

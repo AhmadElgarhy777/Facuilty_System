@@ -23,14 +23,9 @@
                 <span asp-validation-for="SecURL" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="CourseId" class="form-label">Course</label>
-                <select class="form-select" asp-for="CourseId" asp-items="ViewBag.Course" required>
-                    <option value="@Model.CourseId">Select Course</option>
-                </select>
-                <div class="invalid-feedback">
-                    Please select a Course.
-                </div>
-                <span asp-validation-for="CourseId" class="text-warning"></span>
+               
+                <input type="hidden" asp-for="CourseId" class="form-control" />
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -39,9 +34,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
         <partial name="_ValidationScriptsPartial.cshtml">

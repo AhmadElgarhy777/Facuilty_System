@@ -46,6 +46,8 @@ namespace GraduationProject.Areas.Customer.Controllers
             var students = studentcourseRepository.GetAll(expression: e => e.CourseId == CourseID, includeProp: [s=>s.Student , sc => sc.Student.Department]).Select(s => s.Student).ToList();
             ViewBag.CourseName = course.Name; 
             ViewBag.CourseId = CourseID; 
+            ViewBag.ProfID = course.MemberId; 
+
             
 
             return View(students); 

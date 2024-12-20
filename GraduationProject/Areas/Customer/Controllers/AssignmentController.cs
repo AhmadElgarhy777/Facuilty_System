@@ -9,10 +9,12 @@ namespace GraduationProject.Areas.Customer.Controllers
     [Area("Customer")]
     public class AssignmentController : Controller
     {
+        private readonly ICourseRepository courseRepository;
         IAssignmentRepository AssignmentRepository;
 
-        public AssignmentController(IAssignmentRepository AssignmentRepository)
+        public AssignmentController(ICourseRepository courseRepository,IAssignmentRepository AssignmentRepository)
         {
+            this.courseRepository = courseRepository;
             this.AssignmentRepository = AssignmentRepository;
 
         }
@@ -22,6 +24,8 @@ namespace GraduationProject.Areas.Customer.Controllers
             var assignments = AssignmentRepository.GetAll(expression: e => e.CourseId == courseId).ToList();
 
             ViewBag.CourseId = courseId;
+            var course = courseRepository.GetOne(expression: e => e.CourseId == courseId).FirstOrDefault();
+            ViewBag.ProfID =course.MemberId;
 
             return View(model : assignments);
         }

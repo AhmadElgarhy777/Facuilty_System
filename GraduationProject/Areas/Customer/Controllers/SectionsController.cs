@@ -69,7 +69,8 @@ namespace GraduationProject.Areas.Customer.Controllers
             if (page > totalPages) page = totalPages;
             IQueryable<Sections> sections = _sectionsRepository.GetAll([e => e.Course], expression: e => e.Course.CourseId == CourseID);
 
-
+            var course = _courseRepository.GetOne(expression: e => e.CourseId == CourseID).FirstOrDefault();
+            ViewBag.ProfID = course.MemberId;
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
 
@@ -146,7 +147,10 @@ namespace GraduationProject.Areas.Customer.Controllers
             _sectionsRepository.Delete(sections);
             _sectionsRepository.Commit();
             TempData["message"] = "The section is deleted sucesfully";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index2), new
+            {
+                CourseID = sections.CourseId
+            });
         }
 
         public IActionResult StudentSections(int CourseId)

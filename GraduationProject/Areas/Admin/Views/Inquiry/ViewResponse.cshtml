@@ -12,19 +12,18 @@
         <p>@Model.Message</p>
         <p><strong>Date Sent:</strong> @Model.DateSent.ToString("dddd, dd MMMM yyyy hh:mm tt")</p>
         <p><strong>Status:</strong> @Model.Status</p>
+        <p><strong>Status:</strong> @Model.EmployeeNote</p>
+        <p><strong>Status:</strong> @Model.EmployeeResponse</p>
+        <p><strong>Status:</strong> @Model.ResponseDate</p>
+
     </div>
     <div>
-        <a asp-action="Create" asp-route-Id="@Model.Id" class="btn btn-primary">
-            <i class="bi bi-pencil-square"></i> Response
-        </a>
-        <a asp-action="ViewResponse" asp-route-Id="@Model.Id" class="btn btn-primary">
-            <i class="bi bi-pencil-square"></i> View Response
-        </a>
+       
     </div>
 </div>
 
 <div class="mt-4">
-    <a asp-action="Index" class="btn btn-secondary">
+    <a asp-action="Details" asp-route-Id="@Model.Id" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Back to List
     </a>
 </div>
