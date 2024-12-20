@@ -85,6 +85,12 @@
                             <i class="bi bi-book-fill"></i> Courses
                         </a>
                     }
+                    @if (User.IsInRole(SD.Asseitant))
+                    {
+                        <a type="button" class="btn btn-primary" asp-action="AssistantCourses" asp-controller="Assistant" asp-area="Customer" asp-route-AssID="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+                            <i class="bi bi-book-fill"></i> Courses
+                        </a>
+                    }
                    
                 </div>
             </li>

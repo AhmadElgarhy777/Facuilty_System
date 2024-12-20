@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Utility;
 
 namespace DataAccess
 {
@@ -33,6 +34,13 @@ namespace DataAccess
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Name = SD.AdminRole, NormalizedName = SD.AdminRole.ToUpper() },
+            new IdentityRole { Name = SD.Student, NormalizedName = SD.Student.ToUpper() },
+            new IdentityRole { Name = SD.Professor, NormalizedName = SD.Professor.ToUpper() },
+            new IdentityRole { Name = SD.Asseitant, NormalizedName = SD.Asseitant.ToUpper() },
+            new IdentityRole { Name = SD.Empolyee, NormalizedName = SD.Empolyee.ToUpper() }
+        );
             // تخصيص الجداول الأساسية لـ ASP.NET Identity
             builder.Entity<IdentityRole>().ToTable("IdentityRole", "Security");
             builder.Entity<IdentityUser>().ToTable("IdentityUser", "Security");

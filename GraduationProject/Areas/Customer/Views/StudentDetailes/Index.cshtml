@@ -112,51 +112,7 @@
 
     </div>
 
-        <!-- Schedule Table -->
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <div class="card schedule-table">
-                    <div class="card-header text-white" style="background-color: #007bff;">
-                        <h5 class="mb-0">Schedule</h5>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Day</th>
-                                    <th>course</th>
-                                    <th>Start date</th>
-                                    <th>End date</th>
-                                </tr>
-                            </thead>
-                            <tbody id="schedule-body">
-                                @foreach (var item in ViewBag.timetable)
-                                {
-                                    <tr>
-
-                                        <td>@item.Day</td>
-                                      
-                                            @if (item.Lecture != null && item.Lecture.Name != null)
-                                        {
-                                            <td>Lecture @item.Lecture.Name</td>
-                                        
-                                        }
-                                        else if (item.Section != null && item.Section.Name != null)
-                                        {
-                                            <td>Section @item.Section.Name</td>
-                                        }  
-                                        <td>@item.StartTime </td>
-                                        <td>@item.EndTime </td>
-                                    </tr>
-                                }
-                                <!-- Schedule rows will be loaded here dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      
         <!-- Professional Details Table -->
         <div class="row mt-5">
             <div class="col-md-12">

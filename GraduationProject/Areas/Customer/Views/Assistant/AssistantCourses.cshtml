@@ -27,17 +27,9 @@
                 <tr class="table-secondary">
                     <td colspan="6">
                         <div class="d-flex flex-wrap gap-2 justify-content-start">
-                            <a asp-action="StudentCourses" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
-                                <i class="bi bi-book"></i> StudentCourse
-                            </a>
-                            <a asp-action="Index" asp-controller="Assignment" asp-area="Customer" asp-route-CourseId="@item.CourseId" class="btn btn-primary btn-sm">
-                                <i class="bi bi-pencil-square"></i> Assignment
-                            </a>
-                            <a asp-action="Index2" asp-controller="Lectures" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
-                                <i class="bi bi-collection"></i> Lectures
-                            </a>
-                            <a asp-action="Create" asp-controller="Lectures" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
-                                <i class="bi bi-plus-square"></i> Add Lecture
+                         
+                            <a asp-action="Create" asp-controller="Sections" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-square"></i> Add Section
                             </a>
                             <a asp-action="Index2" asp-controller="Sections" asp-area="Customer" asp-route-CourseID="@item.CourseId" class="btn btn-primary btn-sm">
                                 <i class="bi bi-collection"></i> Sections

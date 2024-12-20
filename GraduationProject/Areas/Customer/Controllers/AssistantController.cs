@@ -29,6 +29,12 @@ namespace GraduationProject.Areas.Customer.Controllers
             ViewBag.age = DateTime.Today.Year - Assistant.BirthDate.Year;
             return View(Assistant);
         }
-       
+        public IActionResult AssistantCourses(string AssID)
+        {
+            var Courses = courseRepository.GetAll(includeProp: [e => e.Department], expression: e => e.Member.MemberId == AssID).ToList();
+            return View(model: Courses);
+
+        }
+
     }
 }
